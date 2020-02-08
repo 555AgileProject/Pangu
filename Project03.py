@@ -1,6 +1,6 @@
 import datetime
 from prettytable import PrettyTable
-from  Project02 import if_valid
+from  Project02 import file_reading_gen
 
 class Individual:
     def __init__(self, id):
