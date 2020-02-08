@@ -1,11 +1,11 @@
 def if_valid(filepath):
-    """check each line of a GEDCOM file if it is a valid line"""
+    """base on proj 02
+    returns each valid line"""
     tags = {'0': ['HEAD', 'TRLR', 'NOTE'],
             '1': ['NAME', 'SEX', 'BIRT', 'DEAT', 'FAMC', 'FAMS', 'MARR', 'HUSB', 'WIFE', 'CHIL', 'DIV'], '2': ['DATE']}
     with open(filepath, "r") as f:
         for line in f:
             line = line.strip()
-            print("-->" + line)
             l = line.split(' ', 2)
             validity = 'N'
             tag=l[1]
@@ -19,7 +19,7 @@ def if_valid(filepath):
                 validity = 'Y'
                 tag = l[2]
                 args = l[1]
-            print(f"<-- {l[0]}|{tag}|{validity}|{args}")
+            yield f"{l[0]}|{tag}|{validity}|{args}"
 
 
 def main():
