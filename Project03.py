@@ -1,6 +1,6 @@
 import datetime
 from prettytable import PrettyTable
-from  Project02 import file_reading_gen
+from Project02 import file_reading_gen
 
 class Individual:
     def __init__(self, id):
@@ -14,6 +14,7 @@ class Individual:
         self.dday = 'N/A'
         self.child = 'N/A'
         self.spouse = 'N/A'
+
 
 class Family:
     def __init__(self, id, married, divorced, hus, wife, child):
@@ -33,10 +34,28 @@ class Repository:
         self._analyze_files()
 
     def _analyze_files(self):
-        pass
+        array = []
+        for eachrow in file_reading_gen(self.dir):
+            readline = eachrow.split("|")
+            
+            if(readline[1] in ["INDI" , "FAM"]):
+                #Create New Family and push existing into the respective function
+                orig = readline[1]
+                if(orig == "INDI"):
+                    Individual()   #pass the attributes of self.data to it
+                else:
+                    Family()
+                array = []
+            else:
+                #Add the details to existing Repo and continue iteration
+                #array.append(readline)
+                if(orig == "condition"):
+                    pass
+                    #check and add to the self.parameter.
 
     def pretty_print(self):
-        pass
+        pass 
 
 
 #This is Test branch
+Repository("C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\\proj02test.ged")

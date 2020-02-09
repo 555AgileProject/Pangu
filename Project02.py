@@ -8,7 +8,7 @@ def file_reading_gen(filepath):
             line = line.strip()
             l = line.split(' ', 2)
             validity = False
-            tag=l[1]
+            tag = l[1]
             try:
                 args = l[2]
             except IndexError:
