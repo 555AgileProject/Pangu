@@ -26,10 +26,9 @@ def file_reading_gen(filepath):
 def main():
     f1 = './Project01_Shihao Miao.ged'
     f2 = './proj02test.ged'
-    print(f"Test {f1}")
-    if_valid(f1)
-    print(f"Test {f2}")
-    if_valid(f2)
+    for l in file_reading_gen(f2):
+        print(l)
+
 
 
 if __name__ == '__main__':
