@@ -86,12 +86,8 @@ class Repository:
                         else:
                             fam_buff.id = readline[2]
                     elif readline[1] == 'NOTE':
-                        # Add the details to existing Repo and continue iteration
-                        # array.append(readline)
-                        pass
-                        # if (orig == "condition"):
-                        #     pass
-                        #     # check and add to the self.parameter.
+                        pass    #Ignore the line when there is a note
+                      
             elif (readline[0] == '1'):
                 if (indi_buff.id != None):
                     # condition 1 for update indi_buff
