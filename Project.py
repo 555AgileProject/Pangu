@@ -38,7 +38,7 @@ class Repository:
     def update_age_alive(self):
         for indi_id, indi in self.indi.items():
             if indi.bday != 'NA':
-                birth_date = datetime.strptime(indi.bday,'%d %b %Y')
+                birth_date = indi.bday
                 age = datetime.now() - birth_date
                 indi.age = int(age.days/365)
             else:
@@ -109,19 +109,23 @@ class Repository:
 
             elif (readline[0] == '2'):
                 if (readline[1] == 'DATE'):
+                    try:
+                        the_date = datetime.strptime(readline[2],'%d %b %Y')
+                    except:
+                        the_date = datetime.strptime(readline[2],'%Y')
                     if indi_date_buff[0]:
-                        indi_buff.bday = readline[2]
+                        indi_buff.bday = the_date
                         indi_date_buff[0] = False
                         continue
                     elif indi_date_buff[1]:
-                        indi_buff.dday = readline[2]
+                        indi_buff.dday = the_date
                         indi_date_buff[1] = False
                     elif fam_date_buff[0]:
-                        fam_buff.div_date = readline[2]
+                        fam_buff.div_date = the_date
                         fam_date_buff[0] = False
                         continue
                     elif fam_date_buff[1]:
-                        fam_buff.mar_date = readline[2]
+                        fam_buff.mar_date = the_date
                         fam_date_buff[1] = False
         self.update_age_alive()
 
