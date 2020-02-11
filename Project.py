@@ -156,3 +156,9 @@ class Repository:
         and current date should be less than 150 years after birth for all living people'''
         l=[]
         return l
+
+    def us02(self):
+        """marriage before birth"""
+
+    def us03(self):
+        """Death before marriage"""
