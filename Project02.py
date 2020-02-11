@@ -21,15 +21,3 @@ def file_reading_gen(filepath):
                 args = l[1]
             if validity:
                 yield f"{l[0]}|{tag}|{args}"
-
-
-def main():
-    f1 = './Project01_Shihao Miao.ged'
-    f2 = './proj02test.ged'
-    for l in file_reading_gen(f2):
-        print(l)
-
-
-
-if __name__ == '__main__':
-    main()
