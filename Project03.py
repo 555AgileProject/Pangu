@@ -71,11 +71,10 @@ class Repository:
                     indi_date_buff = [False,False]                        # 0 indicates bday 1 indicates dday 
                 elif(fam_buff.id != None):
                     # condition 2 push the family buffer
-                    if (fam_buff.id != None):
-                        new_fam = fam_buff
+                    new_fam = fam_buff
                     if new_fam.id not in self.fam.keys():
                         self.fam[new_fam.id] = new_fam
-                    fam_buff = Family(None,'NA','NA','NA','NA',set()) # clear the buffer
+                    fam_buff = Family(None,'NA','NA','NA','NA',set())       # clear the buffer
                     fam_date_buff = [False,False]                         # 0 indicates div_date 1 indicates mar_date
                 if(indi_buff.id == fam_buff.id == None):
                     # condition 3 set the ?_buffer's id  
@@ -151,5 +150,4 @@ class Repository:
                 [key, d.mar_date, d.div_date, d.hus_id, self.indi[d.hus_id].name, d.wife_id, self.indi[d.wife_id].name,
                  d.child_id])
         print(ptf.get_string(title="Families"))
-
 
