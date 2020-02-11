@@ -1,8 +1,13 @@
-import Project as p3
+import Project as p
 import unittest
 
 class UserStoryTest(unittest.TestCase):
-    pass
+    test=p.Repository('./')
+    def test_us06(self):
+        expect=[]
+        test.us06
+
+
 
 
 if __name__ == '__main__':

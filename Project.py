@@ -34,7 +34,6 @@ class Repository:
         self.dir = d
         self.indi = {}
         self.fam = {}
-        self.err=[]
         self._analyze_files()
         self.pretty_print()
 
@@ -155,9 +154,14 @@ class Repository:
 
     def us06(self):
         '''Divorce can only occur before death of both spouses'''
-        pass
+        l=[]
+        #for i in self.indi.item()
+        print('')
+        l.append("i1")
+        return l
 
     def us07(self):
         '''Death should be less than 150 years after birth for dead people,
         and current date should be less than 150 years after birth for all living people'''
-        pass
+        l=[]
+        return l
