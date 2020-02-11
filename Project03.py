@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from prettytable import PrettyTable
 from Project02 import file_reading_gen
 
@@ -9,12 +9,14 @@ class Individual:
         self.id = id
         self.name = ''
         self.gender = ''
-        self.bday = ''
+        self.bday = 'NA'
         self.age = ''
         self.alive = True
-        self.dday = 'N/A'
-        self.child = 'N/A'
-        self.spouse = 'N/A'
+        self.dday = 'NA'
+        self.child = 'NA'
+        self.spouse = 'NA'
+        # self.famc = 'NA'
+        # self.fams = 'NA'
 
 
 class Family:
@@ -32,28 +34,108 @@ class Repository:
         self.dir = d
         self.indi = {}
         self.fam = {}
-        self._analyze_files()
+        # self._analyze_files()
+        # self.pretty_print()
+
+    def update_age_alive(self):
+        for indi_id, indi in self.indi.items():
+            if indi.bday != 'NA':
+                birth_date = datetime.strptime(indi.bday,'%d %b %Y')
+                age = datetime.now() - birth_date
+                indi.age = int(age.days/365)
+            else:
+                indi.age = 'NA'
+            if indi.dday != 'NA':
+                indi.alive = False
+            else:
+                indi.alive = True
 
     def _analyze_files(self):
         array = []
+        tag = 'read_one_line'
+        indi_index = {'NAME':'name','SEX':'gender','BIRT':'bday','DEAT':'dday','FAMC':'child','FAMS':'spouse'}
+        fam_index = {'MARR':'mar_date','HUSB':'hus_id','WIFE':'wife_id','CHIL':'child_id','DIV':'div_date'}
+        indi_buff = Individual(None)
+        indi_date_buff = [False,False]                        # 0 indicates bday 1 indicates dday 
+        fam_buff = Family(None,'NA','NA','NA','NA',set())
+        fam_date_buff = [False,False]                         # 0 indicates div_date 1 indicates mar_date
         for eachrow in file_reading_gen(self.dir):
             readline = eachrow.split("|")
+            if (readline[0] == '0'):
+                if (indi_buff.id != None):
+                     # condition 1 push the individual buffer
+                    new_indi = indi_buff
+                    if new_indi.id not in self.indi.keys():
+                        self.indi[new_indi.id] = new_indi
+                    indi_buff = Individual(None) #clear the buffer
+                    indi_date_buff = [False,False]                        # 0 indicates bday 1 indicates dday 
+                elif(fam_buff.id != None):
+                    # condition 2 push the family buffer
+                    if (fam_buff.id != None):
+                        new_fam = fam_buff
+                    if new_fam.id not in self.fam.keys():
+                        self.fam[new_fam.id] = new_fam
+                    fam_buff = Family(None,'NA','NA','NA','NA',set()) # clear the buffer
+                    fam_date_buff = [False,False]                         # 0 indicates div_date 1 indicates mar_date
+                elif(indi_buff.id == fam_buff.id == None):
+                    # condition 3 set the ?_buffer's id  
+                    if (readline[1] in ["INDI", "FAM"]):
+                        # Create New Family and push existing into the respective function
+                        orig = readline[1]
+                        if (orig == "INDI"):
+                            indi_buff.id = readline[2]  # pass the attributes of self.data to it
+                        else:
+                            fam_buff.id = readline[2]
+                    elif readline[1] == 'NOTE':
+                        # Add the details to existing Repo and continue iteration
+                        # array.append(readline)
+                        pass
+                        # if (orig == "condition"):
+                        #     pass
+                        #     # check and add to the self.parameter.
+            elif (readline[0] == '1'):
+                if (indi_buff.id != None):
+                    # condition 1 for update indi_buff
+                    if (readline[1] in ['BIRT','DEAT']):
+                        if readline[1] == 'BIRT':
+                            indi_date_buff[0] = True
+                        else:
+                            indi_date_buff[1] = True
+                    else:
+                        setattr(indi_buff,indi_index[readline[1]],readline[2])
 
-            if (readline[1] in ["INDI", "FAM"]):
-                # Create New Family and push existing into the respective function
-                orig = readline[1]
-                if (orig == "INDI"):
-                    Individual()  # pass the attributes of self.data to it
-                else:
-                    Family()
-                array = []
-            else:
-                # Add the details to existing Repo and continue iteration
-                # array.append(readline)
-                if (orig == "condition"):
-                    pass
-                    # check and add to the self.parameter.
+                elif(fam_buff.id != None):
+                    # condition 2 for update fam_buff
+                    if (readline[1] in ['DIV','MARR']):
+                        if readline[1] == 'DIV':
+                            fam_date_buff[0] = True
+                        else:
+                            fam_date_buff[1] = True
+                    elif readline[1] == 'CHIL':
+                        fam_buff.child_id.add(readline[2])
+                    else:
+                        setattr(fam_buff,fam_index[readline[1]],readline[2])
 
+            elif (readline[0] == '2'):
+                if (readline[1] == 'DATE'):
+                    if indi_date_buff[0]:
+                        indi_buff.bday = readline[2]
+                        indi_date_buff[0] = False
+                        continue
+                    elif indi_date_buff[1]:
+                        indi_buff.dday = readline[2]
+                        indi_date_buff[1] = False
+                    elif fam_date_buff[0]:
+                        fam_buff.div_date = readline[2]
+                        fam_date_buff[0] = False
+                        continue
+                    elif fam_date_buff[1]:
+                        fam_buff.mar_date = readline[2]
+                        fam_date_buff[1] = False
+        self.update_age_alive()
+
+
+            
     def pretty_print(self):
         """ print out the pretty table of individual summary and family summary"""
         pti = PrettyTable(
