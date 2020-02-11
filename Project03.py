@@ -15,8 +15,7 @@ class Individual:
         self.dday = 'NA'
         self.child = 'NA'
         self.spouse = 'NA'
-        # self.famc = 'NA'
-        # self.fams = 'NA'
+
 
 
 class Family:
@@ -34,8 +33,7 @@ class Repository:
         self.dir = d
         self.indi = {}
         self.fam = {}
-        # self._analyze_files()
-        # self.pretty_print()
+
 
     def update_age_alive(self):
         for indi_id, indi in self.indi.items():
@@ -51,8 +49,6 @@ class Repository:
                 indi.alive = True
 
     def _analyze_files(self):
-        array = []
-        tag = 'read_one_line'
         indi_index = {'NAME':'name','SEX':'gender','BIRT':'bday','DEAT':'dday','FAMC':'child','FAMS':'spouse'}
         fam_index = {'MARR':'mar_date','HUSB':'hus_id','WIFE':'wife_id','CHIL':'child_id','DIV':'div_date'}
         indi_buff = Individual(None)
