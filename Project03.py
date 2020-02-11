@@ -77,7 +77,7 @@ class Repository:
                         self.fam[new_fam.id] = new_fam
                     fam_buff = Family(None,'NA','NA','NA','NA',set()) # clear the buffer
                     fam_date_buff = [False,False]                         # 0 indicates div_date 1 indicates mar_date
-                elif(indi_buff.id == fam_buff.id == None):
+                if(indi_buff.id == fam_buff.id == None):
                     # condition 3 set the ?_buffer's id  
                     if (readline[1] in ["INDI", "FAM"]):
                         # Create New Family and push existing into the respective function
