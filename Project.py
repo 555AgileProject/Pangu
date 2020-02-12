@@ -4,6 +4,7 @@ from Project02 import file_reading_gen
 
 #klksjdakdjald
 #kjkjkwkkklqlq
+#22223323233232323
 class Individual:
     def __init__(self, id):
         """a new instance for a individual"""
