@@ -33,7 +33,6 @@ class Repository:
         self.indi = {}
         self.fam = {}
         self._analyze_files()
-        self.pretty_print()
 
     def update_age_alive(self):
         for indi_id, indi in self.indi.items():
