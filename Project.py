@@ -166,8 +166,5 @@ class Repository:
 
     def us03(self):
         """Death before marriage"""
-<<<<<<< HEAD
 
     #nodfijsi
-=======
->>>>>>> parent of 06d5446... test merge
