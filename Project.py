@@ -1,4 +1,4 @@
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 from prettytable import PrettyTable
 from Project02 import file_reading_gen
 
@@ -34,45 +34,48 @@ class Repository:
         self.fam = {}
         self._analyze_files()
 
-    def update_age_alive(self):
-        for indi_id, indi in self.indi.items():
-            if indi.bday != 'NA':
-                birth_date = indi.bday
-                age = datetime.now() - birth_date
-                indi.age = int(age.days/365)
+    def update_age(self):
+        for indi in self.indi.values():
+            if indi.bday != 'NA' and indi.dday != 'NA':
+                indi.age = indi.dday.year - indi.bday.year - (
+                            (indi.dday.month, indi.dday.day) < (indi.bday.month, indi.bday.day))
+
+                indi.alive = False
+            elif indi.bday != 'NA':
+                today = datetime.today()
+                indi.age = today.year - indi.bday.year - (
+                        (today.month, today.day) < (indi.bday.month, indi.bday.day))
+                indi.alive = True
             else:
                 indi.age = 'NA'
-            if indi.dday != 'NA':
-                indi.alive = False
-            else:
-                indi.alive = True
 
     def _analyze_files(self):
-        indi_index = {'NAME':'name','SEX':'gender','BIRT':'bday','DEAT':'dday','FAMC':'child','FAMS':'spouse'}
-        fam_index = {'MARR':'mar_date','HUSB':'hus_id','WIFE':'wife_id','CHIL':'child_id','DIV':'div_date'}
+        indi_index = {'NAME': 'name', 'SEX': 'gender', 'BIRT': 'bday', 'DEAT': 'dday', 'FAMC': 'child',
+                      'FAMS': 'spouse'}
+        fam_index = {'MARR': 'mar_date', 'HUSB': 'hus_id', 'WIFE': 'wife_id', 'CHIL': 'child_id', 'DIV': 'div_date'}
         indi_buff = Individual(None)
-        indi_date_buff = [False,False]                        # 0 indicates bday 1 indicates dday 
-        fam_buff = Family(None,'NA','NA','NA','NA',set())
-        fam_date_buff = [False,False]                         # 0 indicates div_date 1 indicates mar_date
+        indi_date_buff = [False, False]  # 0 indicates bday 1 indicates dday
+        fam_buff = Family(None, 'NA', 'NA', 'NA', 'NA', set())
+        fam_date_buff = [False, False]  # 0 indicates div_date 1 indicates mar_date
         for eachrow in file_reading_gen(self.dir):
             readline = eachrow.split("|")
             if (readline[0] == '0'):
                 if (indi_buff.id != None):
-                     # condition 1 push the individual buffer
+                    # condition 1 push the individual buffer
                     new_indi = indi_buff
                     if new_indi.id not in self.indi.keys():
                         self.indi[new_indi.id] = new_indi
-                    indi_buff = Individual(None) #clear the buffer
-                    indi_date_buff = [False,False]                        # 0 indicates bday 1 indicates dday 
-                elif(fam_buff.id != None):
+                    indi_buff = Individual(None)  # clear the buffer
+                    indi_date_buff = [False, False]  # 0 indicates bday 1 indicates dday
+                elif (fam_buff.id != None):
                     # condition 2 push the family buffer
                     new_fam = fam_buff
                     if new_fam.id not in self.fam.keys():
                         self.fam[new_fam.id] = new_fam
-                    fam_buff = Family(None,'NA','NA','NA','NA',set())       # clear the buffer
-                    fam_date_buff = [False,False]                         # 0 indicates div_date 1 indicates mar_date
-                if(indi_buff.id == fam_buff.id == None):
-                    # condition 3 set the ?_buffer's id  
+                    fam_buff = Family(None, 'NA', 'NA', 'NA', 'NA', set())  # clear the buffer
+                    fam_date_buff = [False, False]  # 0 indicates div_date 1 indicates mar_date
+                if (indi_buff.id == fam_buff.id == None):
+                    # condition 3 set the ?_buffer's id
                     if (readline[1] in ["INDI", "FAM"]):
                         # Create New Family and push existing into the respective function
                         orig = readline[1]
@@ -81,22 +84,22 @@ class Repository:
                         else:
                             fam_buff.id = readline[2]
                     elif readline[1] == 'NOTE':
-                        pass    #Ignore the line when there is a note
+                        pass  # Ignore the line when there is a note
 
             elif (readline[0] == '1'):
                 if (indi_buff.id != None):
                     # condition 1 for update indi_buff
-                    if (readline[1] in ['BIRT','DEAT']):
+                    if (readline[1] in ['BIRT', 'DEAT']):
                         if readline[1] == 'BIRT':
                             indi_date_buff[0] = True
                         else:
                             indi_date_buff[1] = True
                     else:
-                        setattr(indi_buff,indi_index[readline[1]],readline[2])
+                        setattr(indi_buff, indi_index[readline[1]], readline[2])
 
-                elif(fam_buff.id != None):
+                elif (fam_buff.id != None):
                     # condition 2 for update fam_buff
-                    if (readline[1] in ['DIV','MARR']):
+                    if (readline[1] in ['DIV', 'MARR']):
                         if readline[1] == 'DIV':
                             fam_date_buff[0] = True
                         else:
@@ -104,14 +107,14 @@ class Repository:
                     elif readline[1] == 'CHIL':
                         fam_buff.child_id.add(readline[2])
                     else:
-                        setattr(fam_buff,fam_index[readline[1]],readline[2])
+                        setattr(fam_buff, fam_index[readline[1]], readline[2])
 
             elif (readline[0] == '2'):
                 if (readline[1] == 'DATE'):
                     try:
-                        the_date = datetime.strptime(readline[2],'%d %b %Y')
+                        the_date = datetime.strptime(readline[2], '%d %b %Y').date()
                     except:
-                        the_date = datetime.strptime(readline[2],'%Y')
+                        the_date = datetime.strptime(readline[2], '%Y').date()
                     if indi_date_buff[0]:
                         indi_buff.bday = the_date
                         indi_date_buff[0] = False
@@ -126,10 +129,8 @@ class Repository:
                     elif fam_date_buff[1]:
                         fam_buff.mar_date = the_date
                         fam_date_buff[1] = False
-        self.update_age_alive()
+        self.update_age()
 
-
-            
     def pretty_print(self):
         """ print out the pretty table of individual summary and family summary"""
         pti = PrettyTable(
@@ -148,8 +149,8 @@ class Repository:
 
     def us06(self):
         '''Divorce can only occur before death of both spouses'''
-        l=[]
-        #for i in self.indi.item()
+        l = []
+        # for i in self.indi.item()
         print('')
         l.append("i1")
         return l
@@ -157,7 +158,7 @@ class Repository:
     def us07(self):
         '''Death should be less than 150 years after birth for dead people,
         and current date should be less than 150 years after birth for all living people'''
-        l=[]
+        l = []
         for i in self.indi:
             if 'DEAT' in self.indi[i].keys():
                 pass
