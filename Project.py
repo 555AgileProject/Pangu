@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime,timedelta
 from prettytable import PrettyTable
 from Project02 import file_reading_gen
 
@@ -159,6 +159,11 @@ class Repository:
         '''Death should be less than 150 years after birth for dead people,
         and current date should be less than 150 years after birth for all living people'''
         l=[]
+        for i in self.indi:
+            if 'DEAT' in self.indi[i].keys():
+                pass
+            else:
+                pass
         return l
 
     def us02(self):
@@ -166,5 +171,8 @@ class Repository:
 
     def us03(self):
         """Death before marriage"""
+<<<<<<< Updated upstream
+=======
 
-    #nodfijsi
+    #nodfijsi 
+>>>>>>> Stashed changes
