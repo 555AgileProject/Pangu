@@ -38,7 +38,7 @@ class Repository:
         for indi in self.indi.values():
             if indi.bday != 'NA' and indi.dday != 'NA':
                 indi.age = indi.dday.year - indi.bday.year - (
-                            (indi.dday.month, indi.dday.day) < (indi.bday.month, indi.bday.day))
+                        (indi.dday.month, indi.dday.day) < (indi.bday.month, indi.bday.day))
 
                 indi.alive = False
             elif indi.bday != 'NA':
@@ -142,28 +142,42 @@ class Repository:
         ptf = PrettyTable(
             field_names=['ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children'])
         for key, d in self.fam.items():
+            hus_name, wife_name = 'NA', 'NA'
+            if d.hus_id in self.indi:
+                hus_name = self.indi[d.hus_id].name
+            if d.wife_id in self.indi:
+                wife_name = self.indi[d.wife_id].name
             ptf.add_row(
-                [key, d.mar_date, d.div_date, d.hus_id, self.indi[d.hus_id].name, d.wife_id, self.indi[d.wife_id].name,
-                 d.child_id])
+                [key, d.mar_date, d.div_date, d.hus_id, hus_name, d.wife_id, wife_name, d.child_id])
         print(ptf.get_string(title="Families"))
 
     def us06(self):
         '''Divorce can only occur before death of both spouses'''
         l = []
-        # for i in self.indi.item()
-        print('')
-        l.append("i1")
+        for k, f in self.fam.items():
+            if f.div_date != 'NA':
+                d1 = self.indi[f.hus_id].dday
+                d2 = self.indi[f.wife_id].dday
+                if d1 != 'NA' and f.div_date > d1:
+                    print(f"ERROR: FAMILY: US06: {k}: Divorced {f.div_date} after husband's death on {d1}")
+                    l.append(k)
+                if d2 != 'NA' and f.div_date > d2:
+                    print(f"ERROR: FAMILY: US06: {k}: Divorced {f.div_date} after wife's death on {d2}")
+                    l.append(k)
         return l
 
     def us07(self):
         '''Death should be less than 150 years after birth for dead people,
         and current date should be less than 150 years after birth for all living people'''
         l = []
-        for i in self.indi:
-            if 'DEAT' in self.indi[i].keys():
-                pass
-            else:
-                pass
+        s = ''
+        for k, i in self.indi.items():
+            if i.age >= 150:
+                s = f'ERROR: INDIVIDUAL: US07: {k} More than 150 years old at death - Birth {i.bday}'
+                if i.dday != 'NA':
+                    s += f': Death {i.dday}'
+                print(s)
+                l.append(k)
         return l
 
     def us02(self):
@@ -171,4 +185,3 @@ class Repository:
 
     def us03(self):
         """Death before marriage"""
-
