@@ -170,9 +170,8 @@ class Repository:
         '''Death should be less than 150 years after birth for dead people,
         and current date should be less than 150 years after birth for all living people'''
         l = []
-        s = ''
         for k, i in self.indi.items():
-            if i.age >= 150:
+            if i.age!='NA' and i.age >= 150:
                 s = f'ERROR: INDIVIDUAL: US07: {k} More than 150 years old at death - Birth {i.bday}'
                 if i.dday != 'NA':
                     s += f': Death {i.dday}'
