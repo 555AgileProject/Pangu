@@ -2,7 +2,7 @@
 1 SOUR Family Echo
 2 WWW http://www.familyecho.com/
 1 FILE My Family
-1 DATE 26 FEB 2020
+1 DATE 27 FEB 2020
 1 DEST ANSTFILE
 1 GEDC
 2 VERS 5.5.1
@@ -40,14 +40,14 @@
 1 SEX F
 1 BIRT
 2 DATE 20 FEB 1949
-1 FAMS @F3@
+1 FAMS @F2@
 0 @I4@ INDI
 1 NAME Marla /Maples/
 2 GIVN Marla
 2 SURN Maples
 2 _MARNM Maples
 1 SEX F
-1 FAMS @F2@
+1 FAMS @F3@
 0 @I5@ INDI
 1 NAME Barron /Trump/
 2 GIVN Barron
@@ -62,14 +62,14 @@
 1 SEX M
 1 BIRT
 2 DATE 1 JUL 2021
-1 FAMC @F3@
+1 FAMC @F2@
 0 @I7@ INDI
 1 NAME Ivanka
 2 GIVN Ivanka
 1 SEX F
 1 FAMS @F5@
 1 FAMS @F6@
-1 FAMC @F3@
+1 FAMC @F2@
 0 @I8@ INDI
 1 NAME Jared Kushner /Kushner/
 2 GIVN Jared Kushner
@@ -81,13 +81,13 @@
 2 GIVN Eric Trump
 2 SURN Trump
 1 SEX M
-1 FAMC @F3@
+1 FAMC @F2@
 0 @I10@ INDI
 1 NAME Tiffany Trump /Trump/
 2 GIVN Tiffany Trump
 2 SURN Trump
 1 SEX F
-1 FAMC @F2@
+1 FAMC @F3@
 0 @I11@ INDI
 1 NAME Fred Trump /Trump/
 2 GIVN Fred Trump
@@ -116,6 +116,36 @@
 1 DEAT Y
 2 DATE 2 FEB 2022
 1 FAMS @F6@
+0 @I14@ INDI
+1 NAME Alex Trump /Trump/
+2 GIVN Alex Trump
+2 SURN Trump
+2 _MARNM Trump
+1 SEX M
+1 BIRT
+2 DATE 4 MAY 1950
+1 DEAT Y
+2 DATE 6 JUL 1967
+1 FAMS @F7@
+1 FAMC @F4@
+0 @I15@ INDI
+1 NAME Susan /Trump/
+2 GIVN Susan
+2 SURN Trump
+2 _MARNM Trump
+1 SEX F
+1 BIRT
+2 DATE 2 SEP 1955
+1 FAMS @F7@
+0 @I16@ INDI
+1 NAME Tom /Trump/
+2 GIVN Tom
+2 SURN Trump
+2 _MARNM Trump
+1 SEX M
+1 BIRT
+2 DATE 7 NOV 1969
+1 FAMC @F7@
 0 @F1@ FAM
 1 HUSB @I1@
 1 WIFE @I2@
@@ -125,20 +155,21 @@
 1 _CURRENT Y
 0 @F2@ FAM
 1 HUSB @I1@
-1 WIFE @I4@
-1 CHIL @I10@
-1 _CURRENT N
-0 @F3@ FAM
-1 HUSB @I1@
 1 WIFE @I3@
 1 CHIL @I6@
 1 CHIL @I7@
 1 CHIL @I9@
 1 _CURRENT N
+0 @F3@ FAM
+1 HUSB @I1@
+1 WIFE @I4@
+1 CHIL @I10@
+1 _CURRENT N
 0 @F4@ FAM
 1 HUSB @I11@
 1 WIFE @I12@
 1 CHIL @I1@
+1 CHIL @I14@
 1 MARR
 2 DATE 2 MAY 2021
 1 DIV
@@ -152,4 +183,11 @@
 1 HUSB @I13@
 1 WIFE @I7@
 1 _CURRENT N
+0 @F7@ FAM
+1 HUSB @I14@
+1 WIFE @I15@
+1 CHIL @I16@
+1 MARR
+2 DATE 5 AUG 1965
+1 _CURRENT Y
 0 TRLR

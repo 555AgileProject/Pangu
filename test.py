@@ -4,13 +4,20 @@ import unittest
 class UserStoryTest(unittest.TestCase):
     test=p.Repository('./Trump_Fam.ged')
     def test_us06(self):
-        expect=['@F4@']
+        expect = ['@F4@']
         self.assertEqual(self.test.us06(),expect)
 
     def test_us07(self):
-        expect=['@I11@', '@I12@']
+        expect = ['@I11@', '@I12@']
         self.assertEqual(self.test.us07(), expect)
 
+    def test_us09(self):
+        expect = ['@F7@']
+        self.assertEqual(expect, self.test.us09())
+
+    def test_us10(self):
+        expect = ['@F1@', '@F7@']
+        self.assertEqual(expect, self.test.us10())
 
 
 if __name__ == '__main__':
