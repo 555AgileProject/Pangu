@@ -5,11 +5,11 @@ class UserStoryTest(unittest.TestCase):
     test=p.Repository('./Trump_Fam.ged')
     def test_us06(self):
         expect = ['@F4@']
-        self.assertEqual(self.test.us06(),expect)
+        self.assertEqual(expect,self.test.us06())
 
     def test_us07(self):
         expect = ['@I11@', '@I12@']
-        self.assertEqual(self.test.us07(), expect)
+        self.assertEqual(expect,self.test.us07())
 
     def test_us09(self):
         expect = ['@F7@']
