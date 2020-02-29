@@ -244,3 +244,42 @@ class Repository:
                     print(f"ERROR: FAMILY: US10: {k} Marriage {d3} before 14")
                     l.append(k)
         return l
+
+    def us04(self):
+        """Marriage before divorce
+        date of marrige should be before date of divorce"""
+        l = []
+        for k, f in self.fam.items():
+            if f.mar_date != "NA" and f.div_date != "NA":
+                d1 = f.mar_date
+                d2 = f.div_date
+                if d1 != "NA" and d2 != "NA" and d1 > d2:
+                    print(f"ERROR: FAMILY: US04: {k} Marriage {d1} before divorse {d2}")
+                    l.append(k)
+        return l
+
+
+
+    def us08(self):
+        """Birth before marriage of parent
+        Children should be born after marriage of parents (and not more than 9 months after their divorce)"""
+        l = []
+        for k, f in self.fam.items():
+            for i in f.child_id:
+                if f.mar_date != "NA" and f.div_date != "NA":
+                    d1 = self.indi[i].bday
+                    d2 = f.mar_date
+                    d3 = f.div_date
+                    d4 = d3 + relativedelta(months=9)
+                    if d1 != "NA" and d2 != 'NA' and (d1 < d2 or d1 > d4):
+                        print(f"ERROR: FAMILY: US08: {k} Birth {d1} before marriage of parents on {d2} or birth {d1} more than 9 months after divorce")
+                        l.append(k)
+                elif f.mar_date != "NA":
+                    d1 = self.indi[i].bday
+                    d2 = f.mar_date
+                    if d1 != "NA" and d2 != "NA" and d1 < d2:
+                        print(f"ERROR: FAMILY: US08: {k} Birth {d1} before marriange {d2}")
+                        l.append(k)
+
+        return l
+
