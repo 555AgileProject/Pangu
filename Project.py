@@ -271,7 +271,7 @@ class Repository:
                     d2 = f.mar_date
                     d3 = f.div_date
                     d4 = d3 + relativedelta(months=9)
-                    if d1 != "NA" and d2 != 'NA' and (d1 < d2 or d1 > d4):
+                    if d1 != "NA" and d2 != 'NA' and d3 != 'NA' and (d1 < d2 or d1 > d4):
                         print(f"ERROR: FAMILY: US08: {k} Birth {d1} before marriage of parents on {d2} or birth {d1} more than 9 months after divorce")
                         l.append(k)
                 elif f.mar_date != "NA":
