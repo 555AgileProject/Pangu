@@ -113,8 +113,8 @@ class Repository:
                 if (readline[1] == 'DATE'):
                     try:
                         the_date = datetime.strptime(readline[2], '%d %b %Y').date()
-                    except:
-                        the_date = datetime.strptime(readline[2], '%Y').date()
+                    except Exception as E:
+                        the_date = datetime.strptime(readline[2], '%Y').date()  #what if this raises exception?
                     if indi_date_buff[0]:
                         indi_buff.bday = the_date
                         indi_date_buff[0] = False
@@ -179,11 +179,38 @@ class Repository:
                 l.append(k)
         return l
 
-    # def us02(self):
-    #     """marriage before birth"""
-    #
-    # def us03(self):
-    #     """Death before marriage"""
+    def us02(self):
+        """Birth should occur before marriage of an individual"""
+        l = []
+        for x,y in self.fam.items():
+            if self.indi[y.hus_id].bday != "NA" and y.mar_date != "NA":
+                if self.indi[y.wife_id].bday!="NA":                               #both birthdates are available
+                    if(self.indi[y.hus_id].bday > y.mar_date and self.indi[y.wife_id].bday > y.mar_date):           #both of them werent born
+                        print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before both of them were born")
+                        l.append(x)
+                    elif(self.indi[y.hus_id].bday > y.mar_date):                    #wife date exits but not married before birth
+                        print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.hus_id].name}")
+                        l.append(x)
+                elif(self.indi[y.hus_id].bday > y.mar_date):                         #wife doesnt exits but husband is married before
+                    print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.hus_id].name}")
+                    l.append(x)
+            elif self.indi[y.wife_id].bday != "NA" and y.mar_date != "NA":
+                if self.indi[y.wife_id].bday > y.mar_date:                     # husband id doesnt exist but wife is married before birth
+                    print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.wife_id].name}")
+                    l.append(x)
+
+        return l
+
+
+    def us03(self):
+        """Birth should not occur before death of an individual"""
+        l = []
+        for x,y in self.indi.items():
+            if y.dday != "NA" and y.bday != "NA":
+                if(y.dday<y.bday):
+                    print(f"ERROR: Indiidual US03:{y.name} has a death-date before birth-day")
+                    l.append(x)
+        return l
 
     def us09(self):
         """Birth before death of parents
@@ -200,7 +227,6 @@ class Repository:
                         print(f"ERROR: FAMILY: US09: {k} Birth {d1} before death of parents on {d2, d3}")
                         l.append(k)
         return l
-
 
 
     def us10(self):
