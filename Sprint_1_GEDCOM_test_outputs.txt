@@ -1,0 +1,65 @@
++-----------------------------------------------------------------------------------------------------------+
+|                                                Individuals                                                |
++-------+---------------------------------+--------+------------+-----+-------+------------+-------+--------+
+|   ID  |               Name              | Gender |  Birthday  | Age | Alive |   Death    | Child | Spouse |
++-------+---------------------------------+--------+------------+-----+-------+------------+-------+--------+
+|  @I1@ |          Donald /Trump/         |   M    | 1946-06-14 |  73 |  True |     NA     |  @F4@ |  @F3@  |
+|  @I2@ |         Melania /Trump/         |   F    | 1980-05-15 |  39 |  True |     NA     |   NA  |  @F1@  |
+|  @I3@ |          Ivana /Trump/          |   F    | 1949-02-20 |  71 |  True |     NA     |   NA  |  @F2@  |
+|  @I4@ |          Marla /Maples/         |   F    |     NA     |  NA |  True |     NA     |   NA  |  @F3@  |
+|  @I5@ |          Barron /Trump/         |   M    |     NA     |  NA |  True |     NA     |  @F1@ |   NA   |
+|  @I6@ |          Don Jr. /Jr./          |   M    | 2021-07-01 |  -2 |  True |     NA     |  @F2@ |   NA   |
+|  @I7@ |              Ivanka             |   F    |     NA     |  NA |  True |     NA     |  @F2@ |  @F6@  |
+|  @I8@ |     Jared Kushner /Kushner/     |   M    |     NA     |  NA |  True |     NA     |   NA  |  @F5@  |
+|  @I9@ |        Eric Trump /Trump/       |   M    | 2010-09-14 |  -6 | False | 2005-07-09 |  @F2@ |   NA   |
+| @I10@ |      Tiffany Trump /Trump/      |   F    |     NA     |  NA |  True |     NA     |  @F3@ |   NA   |
+| @I11@ |        Fred Trump /Trump/       |   M    | 1860-11-10 | 159 |  True |     NA     |   NA  |  @F4@  |
+| @I12@ | Mary Anne MacLeod Trump /Trump/ |   F    | 1851-03-07 | 152 | False | 2003-07-03 |   NA  |  @F4@  |
+| @I13@ |        Imaginary /Trump/        |   M    |     NA     |  NA |  True | 2022-02-02 |   NA  |  @F6@  |
+| @I14@ |        Alex Trump /Trump/       |   M    | 1950-05-04 |  17 | False | 1967-07-06 |  @F4@ |  @F7@  |
+| @I15@ |          Susan /Trump/          |   F    | 1955-09-02 |  64 |  True |     NA     |   NA  |  @F7@  |
+| @I16@ |           Tom /Trump/           |   M    | 1969-11-07 |  50 |  True |     NA     |  @F7@ |   NA   |
++-------+---------------------------------+--------+------------+-----+-------+------------+-------+--------+
++----------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                   Families                                                                   |
++------+------------+------------+------------+-------------------------+---------+---------------------------------+--------------------------+
+|  ID  |  Married   |  Divorced  | Husband ID |       Husband Name      | Wife ID |            Wife Name            |         Children         |
++------+------------+------------+------------+-------------------------+---------+---------------------------------+--------------------------+
+| @F1@ | 1940-11-19 |     NA     |    @I1@    |      Donald /Trump/     |   @I2@  |         Melania /Trump/         |         {'@I5@'}         |
+| @F2@ |     NA     |     NA     |    @I1@    |      Donald /Trump/     |   @I3@  |          Ivana /Trump/          | {'@I6@', '@I9@', '@I7@'} |
+| @F3@ |     NA     |     NA     |    @I1@    |      Donald /Trump/     |   @I4@  |          Marla /Maples/         |        {'@I10@'}         |
+| @F4@ | 2021-05-02 | 2021-01-04 |   @I11@    |    Fred Trump /Trump/   |  @I12@  | Mary Anne MacLeod Trump /Trump/ |    {'@I1@', '@I14@'}     |
+| @F5@ |     NA     |     NA     |    @I8@    | Jared Kushner /Kushner/ |   @I7@  |              Ivanka             |          set()           |
+| @F6@ |     NA     |     NA     |   @I13@    |    Imaginary /Trump/    |   @I7@  |              Ivanka             |          set()           |
+| @F7@ | 1965-08-05 |     NA     |   @I14@    |    Alex Trump /Trump/   |  @I15@  |          Susan /Trump/          |        {'@I16@'}         |
++------+------------+------------+------------+-------------------------+---------+---------------------------------+--------------------------+
+ERROR: INDIVIDUAL: US01: @I6@ bday 2021-07-01 occurs in the future
+ERROR: INDIVIDUAL: US01: @I13@ dday 2022-02-02 occurs in the future
+ERROR: FAMILY: US01: @F4@ mar_date 2021-05-02 occurs in the future
+ERROR: FAMILY: US01: @F4@ div_date 2021-01-04 occurs in the future
+ERROR: Family US02: Donald /Trump/ and Melania /Trump/ have been married before both of them were born
+ERROR: Indiidual US03:Eric Trump /Trump/ has a death-date before birth-day
+ERROR: FAMILY: US04: @F4@ Marriage 2021-05-02 before divorse 2021-01-04
+ERROR: FAMILY: US05: @F4@ Wife death 2003-07-03 before the marrige 2021-05-02
+ERROR: FAMILY: US06: @F4@: Divorced 2021-01-04 after wife's death on 2003-07-03
+ERROR: INDIVIDUAL: US07: @I11@ More than 150 years old at death - Birth 1860-11-10
+ERROR: INDIVIDUAL: US07: @I12@ More than 150 years old at death - Birth 1851-03-07: Death 2003-07-03
+ERROR: FAMILY: US08: @F4@ Birth 1950-05-04 before marriage of parents on 2021-05-02 or birth 1950-05-04 more than 9 months after divorce
+ERROR: FAMILY: US08: @F4@ Birth 1946-06-14 before marriage of parents on 2021-05-02 or birth 1946-06-14 more than 9 months after divorce
+ERROR: FAMILY: US09: @F7@ Birth 1969-11-07 before death of parents on ('NA', datetime.date(1967, 7, 6))
+ERROR: FAMILY: US10: @F1@ Marriage 1940-11-19 before 14
+ERROR: FAMILY: US10: @F7@ Marriage 1965-08-05 before 14
+test_us01 (__main__.UserStoryTest) ... ok
+test_us02 (__main__.UserStoryTest) ... ok
+test_us03 (__main__.UserStoryTest) ... ok
+test_us04 (__main__.UserStoryTest) ... ok
+test_us05 (__main__.UserStoryTest) ... ok
+test_us07 (__main__.UserStoryTest) ... ok
+test_us08 (__main__.UserStoryTest) ... ok
+test_us09 (__main__.UserStoryTest) ... ok
+test_us10 (__main__.UserStoryTest) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.002s
+
+OK
