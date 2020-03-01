@@ -2,7 +2,7 @@ import Project as p
 import unittest
 
 class UserStoryTest(unittest.TestCase):
-    test = p.Repository('C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\Trump_Fam.ged')
+    test = p.Repository('./Trump_Fam.ged')
     # def test_us06(self):
     #     expect=[]
     #     test.us06
@@ -26,6 +26,16 @@ class UserStoryTest(unittest.TestCase):
     def test_us10(self):
         expect = ['@F1@', '@F7@']
         self.assertEqual(expect, self.test.us10())
+
+    def test_us04(self):
+        expect = ['@F4@']
+        self.assertEqual(expect, self.test.us04())
+
+    def test_us08(self):
+        expect = ['@F4@', '@F4@']
+        self.assertEqual(expect, self.test.us08())
+
+
 
 
 if __name__ == '__main__':
