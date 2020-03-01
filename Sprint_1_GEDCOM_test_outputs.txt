@@ -49,17 +49,3 @@ ERROR: FAMILY: US08: @F4@ Birth 1946-06-14 before marriage of parents on 2021-05
 ERROR: FAMILY: US09: @F7@ Birth 1969-11-07 before death of parents on ('NA', datetime.date(1967, 7, 6))
 ERROR: FAMILY: US10: @F1@ Marriage 1940-11-19 before 14
 ERROR: FAMILY: US10: @F7@ Marriage 1965-08-05 before 14
-test_us01 (__main__.UserStoryTest) ... ok
-test_us02 (__main__.UserStoryTest) ... ok
-test_us03 (__main__.UserStoryTest) ... ok
-test_us04 (__main__.UserStoryTest) ... ok
-test_us05 (__main__.UserStoryTest) ... ok
-test_us07 (__main__.UserStoryTest) ... ok
-test_us08 (__main__.UserStoryTest) ... ok
-test_us09 (__main__.UserStoryTest) ... ok
-test_us10 (__main__.UserStoryTest) ... ok
-
-----------------------------------------------------------------------
-Ran 9 tests in 0.002s
-
-OK
