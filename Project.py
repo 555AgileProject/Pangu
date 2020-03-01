@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from prettytable import PrettyTable
 from Project02 import file_reading_gen
 from dateutil.relativedelta import relativedelta
+import logging
 
 class Individual:
     def __init__(self, id):
@@ -33,6 +34,7 @@ class Repository:
         self.indi = {}
         self.fam = {}
         self._analyze_files()
+        self.pretty_print()
 
     def update_age(self):
         for indi in self.indi.values():
@@ -42,7 +44,7 @@ class Repository:
 
                 indi.alive = False
             elif indi.bday != 'NA':
-                today = datetime.today()
+                today = date.today()
                 indi.age = today.year - indi.bday.year - (
                         (today.month, today.day) < (indi.bday.month, indi.bday.day))
                 indi.alive = True
@@ -150,7 +152,7 @@ class Repository:
             ptf.add_row(
                 [key, d.mar_date, d.div_date, d.hus_id, hus_name, d.wife_id, wife_name, d.child_id])
         print(ptf.get_string(title="Families"))
-
+    
     def us06(self):
         '''Divorce can only occur before death of both spouses'''
         l = []
@@ -230,7 +232,6 @@ class Repository:
                         l.append(k)
         return l
 
-
     def us10(self):
         """Marriage after 14
         Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)"""
@@ -260,8 +261,6 @@ class Repository:
                     l.append(k)
         return l
 
-
-
     def us08(self):
         """Birth before marriage of parent
         Children should be born after marriage of parents (and not more than 9 months after their divorce)"""
@@ -276,7 +275,7 @@ class Repository:
                     if d1 != "NA" and d2 != 'NA' and d3 != 'NA' and (d1 < d2 or d1 > d4):
                         print(f"ERROR: FAMILY: US08: {k} Birth {d1} before marriage of parents on {d2} or birth {d1} more than 9 months after divorce")
                         l.append(k)
-                elif f.mar_date != "NA":
+                elif f.mar_date != "NA" :
                     d1 = self.indi[i].bday
                     d2 = f.mar_date
                     if d1 != "NA" and d2 != "NA" and d1 < d2:
@@ -285,3 +284,34 @@ class Repository:
 
         return l
 
+    def us01(self):
+        """Dates (birth, marriage, divorce, death) should not be after the current date """
+        error_id = set()
+        curr_date = date.today()
+        check_items_indi = ['bday', 'dday']
+        check_items_fam = ['mar_date', 'div_date']
+        for usr_id, usr in self.indi.items():       #check the usr bday and dday
+            for check_item in check_items_indi:
+                if getattr(usr,check_item) != 'NA' and getattr(usr,check_item) > curr_date:
+                    error_id.add(usr_id)
+                    print(f"ERROR: INDIVIDUAL: US01: {usr_id} {check_item} {getattr(usr,check_item)} occurs in the future")
+        for fam_id, fam in self.fam.items():    
+            for check_item in check_items_fam:
+                    if getattr(fam,check_item) != 'NA' and getattr(fam,check_item) > curr_date:
+                        error_id.add(fam_id)
+                        print(f"ERROR: FAMILY: US01: {fam_id} {check_item} {getattr(fam,check_item)} occurs in the future")
+        return error_id
+
+    def us05(self):
+        """ Marriage should occur before death of either spouse """
+        error_id = set()
+        for fam_id, fam in self.fam.items():
+            if self.indi[fam.hus_id].dday != 'NA' and fam.mar_date != 'NA' and fam.mar_date > self.indi[fam.hus_id].dday:
+                print(f"ERROR: FAMILY: US05: {fam_id} Husband death {self.indi[fam.hus_id].dday} before the marrige {fam.mar_date}")
+                if(not error_id.issuperset({fam_id})):
+                    error_id.add(fam_id)
+            if self.indi[fam.wife_id].dday != 'NA' and fam.mar_date != 'NA' and fam.mar_date > self.indi[fam.wife_id].dday:
+                print(f"ERROR: FAMILY: US05: {fam_id} Wife death {self.indi[fam.wife_id].dday} before the marrige {fam.mar_date}")
+                if(not error_id.issuperset({fam_id})):
+                    error_id.add(fam_id)
+        return error_id
