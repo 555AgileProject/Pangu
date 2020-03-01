@@ -183,22 +183,24 @@ class Repository:
         """Birth should occur before marriage of an individual"""
         l = []
         for x,y in self.fam.items():
-            if self.indi[y.hus_id].bday != "NA" and y.mar_date != "NA":
-                if self.indi[y.wife_id].bday!="NA":                               #both birthdates are available
-                    if(self.indi[y.hus_id].bday > y.mar_date and self.indi[y.wife_id].bday > y.mar_date):           #both of them werent born
-                        print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before both of them were born")
-                        l.append(x)
-                    elif(self.indi[y.hus_id].bday > y.mar_date):                    #wife date exits but not married before birth
-                        print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.hus_id].name}")
-                        l.append(x)
-                elif(self.indi[y.hus_id].bday > y.mar_date):                         #wife doesnt exits but husband is married before
+            if self.indi[y.hus_id].bday != "NA" and y.mar_date != "NA" and self.indi[y.wife_id].bday!="NA":       #both birthdates are available
+                if(self.indi[y.hus_id].bday > y.mar_date and self.indi[y.wife_id].bday > y.mar_date):           #both of them werent born
+                    print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before both of them were born")
+                    l.append(x)
+                elif(self.indi[y.hus_id].bday > y.mar_date):                    #Husband married before birth
+                    print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.hus_id].name}")
+                    l.append(x)
+                elif(self.indi[y.wife_id].bday > y.mar_date):                    #wife married before birth
+                    print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.wife_id].name}")
+                    l.append(x)
+            elif self.indi[y.hus_id].bday != "NA" and y.mar_date != "NA":
+                if(self.indi[y.hus_id].bday > y.mar_date):                        #wife doesnt exits but husband is married before birth
                     print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.hus_id].name}")
                     l.append(x)
             elif self.indi[y.wife_id].bday != "NA" and y.mar_date != "NA":
-                if self.indi[y.wife_id].bday > y.mar_date:                     # husband id doesnt exist but wife is married before birth
+                if (self.indi[y.wife_id].bday > y.mar_date):                     # husband id doesnt exist but wife is married before birth
                     print(f"ERROR: Family US02: {self.indi[y.hus_id].name} and {self.indi[y.wife_id].name} have been married before birth of {self.indi[y.wife_id].name}")
                     l.append(x)
-
         return l
 
 
