@@ -228,7 +228,7 @@ class Repository:
                     d3 = self.indi[f.hus_id].dday
                     d4 = d3 - relativedelta(months=9)
                     if d1 != "NA" and d2 != 'NA' and d3 != "NA" and d1 > d2 or d1 > d4:
-                        print(f"ERROR: FAMILY: US09: {k} Birth {d1} before death of parents on {d2, d3}")
+                        print(f"ERROR: FAMILY: US09: {k} Birth {d1} before death of parents on {d2}, {d3}")
                         l.append(k)
         return l
 
@@ -244,7 +244,7 @@ class Repository:
                 d4 = d1 + relativedelta(years=14)
                 d5 = d2 + relativedelta(years=14)
                 if d1 != "NA" and d2 != "NA" and d3 < d4 or d3 < d5:
-                    print(f"ERROR: FAMILY: US10: {k} Marriage {d3} before 14")
+                    print(f"ERROR: FAMILY: US10: {k} Marriage {d3} before they were 14 years old")
                     l.append(k)
         return l
 
