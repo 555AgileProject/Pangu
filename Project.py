@@ -116,7 +116,7 @@ class Repository:
                     try:
                         the_date = datetime.strptime(readline[2], '%d %b %Y').date()
                     except Exception as E:
-                        the_date = datetime.strptime(readline[2], '%Y').date()  #what if this raises exception?
+                        print("ERROR: Please check the date format! ")  #what if this raises exception? #Solved!
                     if indi_date_buff[0]:
                         indi_buff.bday = the_date
                         indi_date_buff[0] = False
@@ -292,12 +292,12 @@ class Repository:
         check_items_fam = ['mar_date', 'div_date']
         for usr_id, usr in self.indi.items():       #check the usr bday and dday
             for check_item in check_items_indi:
-                if getattr(usr,check_item) != 'NA' and getattr(usr,check_item) > curr_date:
+                if self.ad_date_compare(getattr(usr,check_item), curr_date) == -1:
                     error_id.add(usr_id)
                     print(f"ERROR: INDIVIDUAL: US01: {usr_id} {check_item} {getattr(usr,check_item)} occurs in the future")
         for fam_id, fam in self.fam.items():    
             for check_item in check_items_fam:
-                    if getattr(fam,check_item) != 'NA' and getattr(fam,check_item) > curr_date:
+                    if self.ad_date_compare(getattr(fam,check_item), curr_date) == -1:
                         error_id.add(fam_id)
                         print(f"ERROR: FAMILY: US01: {fam_id} {check_item} {getattr(fam,check_item)} occurs in the future")
         return error_id
@@ -306,12 +306,28 @@ class Repository:
         """ Marriage should occur before death of either spouse """
         error_id = set()
         for fam_id, fam in self.fam.items():
-            if self.indi[fam.hus_id].dday != 'NA' and fam.mar_date != 'NA' and fam.mar_date > self.indi[fam.hus_id].dday:
+            fam_mar_d = fam.mar_date
+            hus_dday = self.indi[fam.hus_id].dday
+            if self.ad_date_compare(fam_mar_d, hus_dday) == -1: 
                 print(f"ERROR: FAMILY: US05: {fam_id} Husband death {self.indi[fam.hus_id].dday} before the marrige {fam.mar_date}")
                 if(not error_id.issuperset({fam_id})):
                     error_id.add(fam_id)
-            if self.indi[fam.wife_id].dday != 'NA' and fam.mar_date != 'NA' and fam.mar_date > self.indi[fam.wife_id].dday:
+            if self.ad_date_compare(fam.mar_date, self.indi[fam.wife_id].dday) == -1: 
                 print(f"ERROR: FAMILY: US05: {fam_id} Wife death {self.indi[fam.wife_id].dday} before the marrige {fam.mar_date}")
                 if(not error_id.issuperset({fam_id})):
                     error_id.add(fam_id)
         return error_id
+
+    def ad_date_compare(self, my_date, compare_date):
+        """ 
+        advanced time comparation, if my date is before or equal to the compare date, the return will be 1
+        if my date is later than the compare date then return -1
+        if my date is not comparable aka 'NA' return 0
+        """
+        if my_date == 'NA' or compare_date == 'NA':
+            return False
+        else:
+            if my_date > compare_date:
+                return -1
+            else:
+                return 1
