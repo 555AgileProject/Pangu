@@ -2,6 +2,8 @@ from datetime import datetime, timedelta, date
 from prettytable import PrettyTable
 from Project02 import file_reading_gen
 from dateutil.relativedelta import relativedelta
+from collections import defaultdict
+
 import logging
 
 
@@ -392,3 +394,19 @@ class Repository:
                         print(f"Error: FAMILY:US16: <{f.id}> Last names don't match {lastname} vs {name}")
                         res.append(f.id)
         return res
+
+    def us14(self):
+        """No more than five siblings should be born at the same time"""
+        fam_result = []
+        for fam_id , fam in self.fam.items():
+            # fam_result.extend(fam_result)
+            child_bdy = defaultdict(int)
+            for child in fam.child_id:
+                if self.indi[child].bday != "NA":
+                    this_bdy = self.indi[child].bday
+                    child_bdy[self.indi[child].bday] += 1
+            fam_result.extend([fam_id for birth,res in child_bdy.items() if res>5])
+        print(f"ERROR: FAMILY: US14: {fam_result} has more than 5 children born on same date")
+        return(fam_result)
+
+
