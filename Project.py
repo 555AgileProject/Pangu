@@ -37,7 +37,7 @@ class Repository:
         self.indi = {}
         self.fam = {}
         self._analyze_files()
-        self.pretty_print()
+        #self.pretty_print()
 
     def update_age(self):
         for indi in self.indi.values():
@@ -352,12 +352,12 @@ class Repository:
         for f in self.fam.values():
             if f.wife_id != 'NA':
                 wife = self.indi[f.wife_id]
-                if wife._age == "NA":
+                if wife.age == "NA":
                     print(f"f{f.id} Wife age does not exist. ")
                     continue
             if f.hus_id != 'NA':
                 hus = self.indi[f.hus_id]
-                if hus._age == "NA":
+                if hus.age == "NA":
                     print(f"f{f.id} Husband age does not exist. ")
                     continue
             if f.child_id:
@@ -367,15 +367,15 @@ class Repository:
 
                 for child in childs:
                     if child.age == "NA":
-                        raise TypeError(f"Child {child.id} age does not exist.")
-
-                for child in childs:
-                    if (wife.age - child.age) > 60:
+                        print(f"Child {child.id} age does not exist.")
+                        continue
+                    if (int(wife.age) - int(child.age)) > 60:
                         print(f"ERROR: FAMILY: US12: {f.id} Mother's age: {wife.age}, child's age: {child.age}")
                         res.add(f.id)
-                    if (hus.age - child.age) > 80:
+                    if (int(hus.age) - int(child.age)) > 80:
                         print(f"ERROR: FAMILY: US12: {f.id} Father's age: {hus.age}, child's age: {child.age}")
                         res.add(f.id)
+        return res
 
     def us16(self):
         '''All male members of a family should have the same last name'''
