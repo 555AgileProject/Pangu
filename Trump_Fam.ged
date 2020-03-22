@@ -163,6 +163,70 @@
 1 BIRT
 2 DATE 6 JUN 2000
 1 FAMC @F4@
+1 NAME Imagin Trump 1
+2 GIVN Imagin Trump 1
+1 SEX M
+1 FAMC @F2@
+0 @I18@ INDI
+1 NAME Imagin Trump 2
+2 GIVN Imagin Trump 2
+1 SEX F
+1 FAMC @F2@
+0 @I19@ INDI
+1 NAME Imagin Trump4
+2 GIVN Imagin Trump4
+1 SEX F
+1 FAMC @F2@
+0 @I20@ INDI
+1 NAME Angel 6
+2 GIVN Angel 6
+1 SEX F
+1 FAMC @F2@
+0 @I21@ INDI
+1 NAME Imain Trump 66
+2 GIVN Imain Trump 66
+1 SEX M
+1 FAMC @F2@
+0 @I22@ INDI
+1 NAME Imagin 9
+2 GIVN Imagin 9
+1 FAMC @F2@
+0 @I23@ INDI
+1 NAME Imagin 10
+2 GIVN Imagin 10
+1 SEX F
+1 FAMC @F2@
+0 @I24@ INDI
+1 NAME Imagin 12
+2 GIVN Imagin 12
+1 SEX M
+1 FAMC @F2@
+0 @I25@ INDI
+1 NAME Imagin 99
+2 GIVN Imagin 99
+1 SEX F
+1 FAMC @F2@
+0 @I26@ INDI
+1 NAME Imagin 14
+2 GIVN Imagin 14
+1 SEX F
+1 FAMC @F2@
+0 @I27@ INDI
+1 NAME Imagin 14
+2 GIVN Imagin 14
+1 SEX F
+1 FAMC @F2@
+0 @I28@ INDI
+1 NAME Imagin the Last?
+2 GIVN Imagin the Last?
+1 SEX F
+1 FAMC @F2@
+0 @I29@ INDI
+1 NAME Imagin the Safety /Extra/
+2 GIVN Imagin the Safety
+2 SURN Extra
+1 SEX M
+1 FAMC @F2@
 0 @F1@ FAM
 1 HUSB @I1@
 1 WIFE @I2@
@@ -181,6 +245,19 @@
 1 CHIL @I6@
 1 CHIL @I7@
 1 CHIL @I9@
+1 CHIL @I17@
+1 CHIL @I18@
+1 CHIL @I19@
+1 CHIL @I20@
+1 CHIL @I21@
+1 CHIL @I22@
+1 CHIL @I23@
+1 CHIL @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+1 CHIL @I27@
+1 CHIL @I28@
+1 CHIL @I29@
 1 _CURRENT N
 0 @F4@ FAM
 1 HUSB @I11@

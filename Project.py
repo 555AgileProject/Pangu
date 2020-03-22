@@ -403,10 +403,21 @@ class Repository:
             child_bdy = defaultdict(int)
             for child in fam.child_id:
                 if self.indi[child].bday != "NA":
-                    this_bdy = self.indi[child].bday
                     child_bdy[self.indi[child].bday] += 1
             fam_result.extend([fam_id for birth,res in child_bdy.items() if res>5])
         print(f"ERROR: FAMILY: US14: {fam_result} has more than 5 children born on same date")
         return(fam_result)
 
+    def us15(self):
+        """There should be fewer than 15 siblings in a family"""
+        fam_result = []
+        for fam_id, fam in self.fam.items():
+            if(len(fam.child_id)>15):
+                fam_result.extend(fam_id)
+        if(fam_result):
+            print(f"ERROR: FAMILY: US14: {fam_result} has more than 15 children born")
+            return(fam_result)
 
+
+#test = Repository("C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\\Trump_Fam.ged")
+#test.us15()
