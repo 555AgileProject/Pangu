@@ -1,7 +1,5 @@
 import Project as p
 import unittest
-import sys
-import logging
 
 
 class UserStoryTest(unittest.TestCase):
@@ -39,7 +37,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us04())
 
     def test_us08(self):
-        expect = ['@F4@', '@F4@']
+        expect = ['@F4@', '@F4@', '@F4@']
         self.assertEqual(expect, self.test.us08())
 
     def test_us01(self):
@@ -50,6 +48,17 @@ class UserStoryTest(unittest.TestCase):
         expect = {'@F4@'}
         self.test.us05()
         self.assertEqual(self.test.us05(), expect)
+
+    def test_us12(self):
+        result= self.test.us12()
+        self.assertIn('@F4@',result)
+        self.assertIn('@F3@', result)
+        self.assertIn('@F2@', result)
+
+    def test_us16(self):
+        result = self.test.us16()
+        self.assertIn('@F4@', result)
+        self.assertIn('@F3@', result)
 
 
 if __name__ == '__main__':
