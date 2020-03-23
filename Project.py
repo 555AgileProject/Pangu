@@ -422,10 +422,10 @@ class Repository:
         """There should be fewer than 15 siblings in a family"""
         fam_result = []
         for fam_id, fam in self.fam.items():
-            if(len(fam.child_id)>15):
-                fam_result.extend(fam_id)
+            if(len(fam.child_id)>=15):
+                fam_result.append(fam.id)
         if(fam_result):
-            print(f"ERROR: FAMILY: US14: {fam_result} has more than 15 children born")
+            print(f"ERROR: FAMILY: US15: {fam_result} has more than 15 children born")
             return(fam_result)
 
     def us19(self):
