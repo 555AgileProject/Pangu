@@ -7,7 +7,7 @@ import logging
 class UserStoryTest(unittest.TestCase):
     test = p.Repository('./Trump_Fam.ged')
     func_name = ''
-    for func_name in ['us01', 'us02', 'us03', 'us04', 'us05', 'us06', 'us07', 'us08', 'us09', 'us10']:
+    for func_name in ['us01', 'us02', 'us03', 'us04', 'us05', 'us06', 'us07', 'us08', 'us09', 'us10', 'us14', 'us15']:
         getattr(test, func_name)()
 
     def test_us01(self):
@@ -56,7 +56,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us09())
 
     def test_us15(self):
-        expect = ['@F3@']
+        expect = ['@F7@']
         self.assertEqual(expect, self.test.us09())
 
 if __name__ == '__main__':
