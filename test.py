@@ -58,7 +58,8 @@ class UserStoryTest(unittest.TestCase):
     def test_us16(self):
         result = self.test.us16()
         self.assertIn('@F4@', result)
-        self.assertIn('@F3@', result)
+        self.assertIn('@F5@', result)
+        self.assertIn('@F2@', result)
 
     def test_us17(self):
         expect = ['@F10@']
