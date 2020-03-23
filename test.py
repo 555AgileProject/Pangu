@@ -48,6 +48,14 @@ class UserStoryTest(unittest.TestCase):
         expect = {'@F4@'}
         self.test.us05()
         self.assertEqual(self.test.us05(), expect)
+        
+    def test_us14(self):
+        expect = ['@F7@']
+        self.assertEqual(expect, self.test.us09())
+
+    def test_us15(self):
+        expect = ['@F3@']
+        self.assertEqual(expect, self.test.us09())
 
     def test_us12(self):
         result= self.test.us12()
@@ -58,7 +66,8 @@ class UserStoryTest(unittest.TestCase):
     def test_us16(self):
         result = self.test.us16()
         self.assertIn('@F4@', result)
-        self.assertIn('@F3@', result)
+        self.assertIn('@F5@', result)
+        self.assertIn('@F2@', result)
 
     def test_us17(self):
         expect = ['@F9@']
@@ -68,7 +77,7 @@ class UserStoryTest(unittest.TestCase):
     def test_us18(self):
         expect = ['@F10@']
         self.test.us18()
-        self.assertEqual(expect, self.test.us18())
+        self.assertEqual(expect, self.test.us18()) #nice
 
 
 
