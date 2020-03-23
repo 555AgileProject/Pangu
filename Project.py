@@ -399,7 +399,7 @@ class Repository:
     def us14(self):
         """No more than five siblings should be born at the same time"""
         fam_result = []
-        for fam_id , fam in self.fam.items():
+        for fam_id, fam in self.fam.items():
             # fam_result.extend(fam_result)
             child_bdy = defaultdict(int)
             for child in fam.child_id:
@@ -409,20 +409,18 @@ class Repository:
         print(f"ERROR: FAMILY: US14: {fam_result} has more than 5 children born on same date")
         return(fam_result)
 
-
     def us15(self):
         """There should be fewer than 15 siblings in a family"""
         fam_result = []
         for fam_id, fam in self.fam.items():
-            if(len(fam.child_id)>15):
-                fam_result.extend(fam_id)
+            if(len(fam.child_id)>=15):
+                fam_result.append(fam.id)
         if(fam_result):
-            print(f"ERROR: FAMILY: US14: {fam_result} has more than 15 children born")
+            print(f"ERROR: FAMILY: US15: {fam_result} has more than 15 children born")
             return(fam_result)
 
-
     def us19(self):
-        '''Divorce can only occur before death of both spouses'''
+        '''First cousins should not marry'''
         result = []
         for fam_id, fam in self.fam.items():
             hus = fam.hus_id
@@ -489,25 +487,71 @@ class Repository:
                       print(f"ERROR: FAMILY: US19: {result[0]} and {result[1]} are first cousins")
                       return result
 
-    def us17(self):
-        """No marriages to children"""
-        fam_error = []
-        for fam1_id, fam1 in self.fam.items():
-            for fam2_id, fam2 in self.fam.items():
-                if fam1.child_id != 'NA':
-                   if (fam1.hus_id == fam2.hus_id and fam2.wife_id in fam1.child_id) or (fam1.wife_id == fam2.wife_id and fam2.hus_id in fam1.child_id):
-                      print(f"ERROR: FAMILY: US17: {fam2_id} contain(s) that parent married child")
-                      fam_error.append(fam2_id)
-        return fam_error
 
-    def us18(self):
-        """Siblings should not marry"""
-        fam_error = []
-        for fam1_id, fam1 in self.fam.items():
-            for fam2_id, fam2 in self.fam.items():
-                if fam1.child_id != "NA":
-                    if fam2.hus_id in fam1.child_id and fam2.wife_id in fam1.child_id:
-                        print(f"ERROR: FAMILY: US18: {fam2_id} married with his(her) siblings")
-                        fam_error.append(fam2_id)
-        return fam_error
+    def us20(self):
+        '''Aunts and uncles should not marry their nieces or nephews'''
+        result = []
+        for fam_id, fam in self.fam.items():
+            hus = fam.hus_id
+            wife = fam.wife_id
 
+            hus_mom = 'NA'
+            hus_mom_mom = 'NA2'
+            hus_mom_dad = 'NA3'
+            hus_dad = 'NA'
+            hus_dad_mom = 'NA5'
+            hus_dad_dad = 'NA6'
+
+            wife_mom = 'NA'
+            wife_mom_mom = 'NA8'
+            wife_mom_dad = 'NA9'
+            wife_dad = 'NA'
+            wife_dad_mom = 'NA11'
+            wife_dad_dad = 'NA12'
+
+            for fam_id, fam in self.fam.items():
+                for i in fam.child_id:
+                    if i == hus:
+                        hus_mom = fam.wife_id
+                        hus_dad = fam.hus_id
+
+                        for fam_id, fam in self.fam.items():
+                            for j in fam.child_id:
+                                if j == hus_mom:
+                                    hus_mom_mom = fam.wife_id
+                                    hus_mom_dad = fam.hus_id
+                                    break
+                        for fam_id, fam in self.fam.items():
+                            for k in fam.child_id:
+                                if k == hus_dad:
+                                    hus_dad_mom = fam.wife_id
+                                    hus_dad_dad = fam.hus_id
+                                    break
+
+            for fam_id, fam in self.fam.items():
+                for i in fam.child_id:
+                    if i == wife:
+                        wife_mom = fam.wife_id
+                        wife_dad = fam.hus_id
+
+                        for fam_id, fam in self.fam.items():
+                            for j in fam.child_id:
+                                if j == wife_mom:
+                                    wife_mom_mom = fam.wife_id
+                                    wife_mom_dad = fam.hus_id
+                                    break
+                        for fam_id, fam in self.fam.items():
+                            for k in fam.child_id:
+                                if k == wife_dad:
+                                    wife_dad_mom = fam.wife_id
+                                    wife_dad_dad = fam.hus_id
+                                    break
+
+            if(hus_mom == wife_mom_mom and hus_dad == wife_mom_dad) or (
+                    hus_mom == wife_dad_mom and hus_dad == wife_dad_dad) or(
+                    wife_mom == hus_mom_mom and wife_dad == hus_mom_dad) or (
+                    wife_mom == hus_dad_mom and wife_dad == hus_dad_dad):
+                        result.append(hus)
+                        result.append(wife)
+                        print(f"ERROR: FAMILY: US20: {result[0]} and {result[1]} are uncle-niece/wife-nephew")
+                        return result
