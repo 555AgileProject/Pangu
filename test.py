@@ -22,7 +22,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us07())
 
     def test_us09(self):
-        expect = ['@F7@']
+        expect = ['@F8@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us10(self):
@@ -34,11 +34,11 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us04())
 
     def test_us08(self):
-        expect = ['@F4@', '@F4@', '@F4@']
+        expect = ['@F4@', '@F4@']
         self.assertEqual(expect, self.test.us08())
 
     def test_us01(self):
-        expect = {'@I6@', '@I13@', '@F4@'}
+        expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I30@', '@I13@', '@I34@'}
         self.assertEqual(self.test.us01(), expect)
 
     def test_us05(self):
@@ -47,11 +47,11 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(self.test.us05(), expect)
 
     def test_us14(self):
-        expect = ['@F7@']
+        expect = ['@F8@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us15(self):
-        expect = ['@F7@']
+        expect = ['@F8@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us12(self):
