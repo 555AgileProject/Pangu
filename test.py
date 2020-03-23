@@ -63,5 +63,9 @@ class UserStoryTest(unittest.TestCase):
         expect = ['@I31@', '@I32@']
         self.assertEqual(expect, self.test.us19())
 
+    def test_us20(self):
+        expect = ['@I33@', '@I34@']
+        self.assertEqual(expect, self.test.us20())
+
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2, buffer=True)
