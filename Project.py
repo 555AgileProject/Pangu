@@ -247,14 +247,15 @@ class Repository:
         l = []
         for k, f in self.fam.items():
             if f.mar_date != "NA":
-                d1 = self.indi[f.hus_id].bday
-                d2 = self.indi[f.wife_id].bday
-                d3 = f.mar_date
-                d4 = d1 + relativedelta(years=14)
-                d5 = d2 + relativedelta(years=14)
-                if d1 != "NA" and d2 != "NA" and d3 < d4 or d3 < d5:
-                    print(f"ERROR: FAMILY: US10: {k} Marriage {d3} before 14")
-                    l.append(k)
+                if self.indi[f.hus_id].bday != "NA" and self.indi[f.wife_id].bday !="NA":
+                    d1 = self.indi[f.hus_id].bday
+                    d2 = self.indi[f.wife_id].bday
+                    d3 = f.mar_date
+                    d4 = d1 + relativedelta(years=14)
+                    d5 = d2 + relativedelta(years=14)
+                    if d1 != "NA" and d2 != "NA" and d3 < d4 or d3 < d5:
+                        print(f"ERROR: FAMILY: US10: {k} Marriage {d3} before 14")
+                        l.append(k)
         return l
 
     def us04(self):
