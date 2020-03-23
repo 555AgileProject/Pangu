@@ -37,7 +37,7 @@ class Repository:
         self.indi = {}
         self.fam = {}
         self._analyze_files()
-        #self.pretty_print()
+        # self.pretty_print()
 
     def update_age(self):
         for indi in self.indi.values():
@@ -247,7 +247,7 @@ class Repository:
         l = []
         for k, f in self.fam.items():
             if f.mar_date != "NA":
-                if self.indi[f.hus_id].bday != "NA" and self.indi[f.wife_id].bday !="NA":
+                if self.indi[f.hus_id].bday != "NA" and self.indi[f.wife_id].bday != "NA":
                     d1 = self.indi[f.hus_id].bday
                     d2 = self.indi[f.wife_id].bday
                     d3 = f.mar_date
@@ -399,27 +399,25 @@ class Repository:
     def us14(self):
         """No more than five siblings should be born at the same time"""
         fam_result = []
-        for fam_id , fam in self.fam.items():
+        for fam_id, fam in self.fam.items():
             # fam_result.extend(fam_result)
             child_bdy = defaultdict(int)
             for child in fam.child_id:
                 if self.indi[child].bday != "NA":
                     child_bdy[self.indi[child].bday] += 1
-            fam_result.extend([fam_id for birth,res in child_bdy.items() if res>5])
+            fam_result.extend([fam_id for birth, res in child_bdy.items() if res > 5])
         print(f"ERROR: FAMILY: US14: {fam_result} has more than 5 children born on same date")
-        return(fam_result)
-
+        return (fam_result)
 
     def us15(self):
         """There should be fewer than 15 siblings in a family"""
         fam_result = []
         for fam_id, fam in self.fam.items():
-            if(len(fam.child_id)>15):
+            if (len(fam.child_id) > 15):
                 fam_result.extend(fam_id)
-        if(fam_result):
+        if (fam_result):
             print(f"ERROR: FAMILY: US14: {fam_result} has more than 15 children born")
-            return(fam_result)
-
+            return (fam_result)
 
     def us19(self):
         '''Divorce can only occur before death of both spouses'''
@@ -483,11 +481,11 @@ class Repository:
             if (hus_mom_mom == wife_mom_mom and hus_mom_dad == wife_mom_dad) or (
                     hus_mom_mom == wife_dad_mom and hus_mom_dad == wife_dad_dad) or (
                     hus_dad_mom == wife_mom_mom and hus_dad_dad == wife_mom_dad) or (
-                    hus_dad_mom == wife_dad_mom and hus_dad_dad == wife_dad_dad) :
-                      result.append(hus)
-                      result.append(wife)
-                      print(f"ERROR: FAMILY: US19: {result[0]} and {result[1]} are first cousins")
-                      return result
+                    hus_dad_mom == wife_dad_mom and hus_dad_dad == wife_dad_dad):
+                result.append(hus)
+                result.append(wife)
+                print(f"ERROR: FAMILY: US19: {result[0]} and {result[1]} are first cousins")
+                return result
 
     def us17(self):
         """No marriages to children"""
@@ -495,9 +493,10 @@ class Repository:
         for fam1_id, fam1 in self.fam.items():
             for fam2_id, fam2 in self.fam.items():
                 if fam1.child_id != 'NA':
-                   if (fam1.hus_id == fam2.hus_id and fam2.wife_id in fam1.child_id) or (fam1.wife_id == fam2.wife_id and fam2.hus_id in fam1.child_id):
-                      print(f"ERROR: FAMILY: US17: {fam2_id} contain(s) that parent married child")
-                      fam_error.append(fam2_id)
+                    if (fam1.hus_id == fam2.hus_id and fam2.wife_id in fam1.child_id) or (
+                            fam1.wife_id == fam2.wife_id and fam2.hus_id in fam1.child_id):
+                        print(f"ERROR: FAMILY: US17: {fam2_id} contain(s) that parent married child")
+                        fam_error.append(fam2_id)
         return fam_error
 
     def us18(self):
@@ -510,4 +509,3 @@ class Repository:
                         print(f"ERROR: FAMILY: US18: {fam2_id} married with his(her) siblings")
                         fam_error.append(fam2_id)
         return fam_error
-

@@ -4,9 +4,6 @@ import unittest
 
 class UserStoryTest(unittest.TestCase):
     test = p.Repository('./Trump_Fam.ged')
-    func_name = ''
-    # for func_name in ['us01', 'us02', 'us03', 'us04', 'us05', 'us06', 'us07', 'us08', 'us09', 'us10', 'us14', 'us15','us12','us16','us17','us18','us19','us20']:
-    #     getattr(test, func_name)()
 
     def test_us02(self):
         expect = ["@F1@"]
@@ -48,7 +45,7 @@ class UserStoryTest(unittest.TestCase):
         expect = {'@F4@'}
         self.test.us05()
         self.assertEqual(self.test.us05(), expect)
-        
+
     def test_us14(self):
         expect = ['@F7@']
         self.assertEqual(expect, self.test.us09())
@@ -58,8 +55,8 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us09())
 
     def test_us12(self):
-        result= self.test.us12()
-        self.assertIn('@F4@',result)
+        result = self.test.us12()
+        self.assertIn('@F4@', result)
         self.assertIn('@F3@', result)
         self.assertIn('@F2@', result)
 
@@ -78,7 +75,7 @@ class UserStoryTest(unittest.TestCase):
         expect = ['@F10@']
         self.test.us18()
         self.assertEqual(expect, self.test.us18())
-    
+
     def test_us19(self):
         expect = ['@I31@', '@I32@']
         self.test.us19()
@@ -90,6 +87,5 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us20())
 
 
-
 if __name__ == '__main__':
-    unittest.main(exit=False, verbosity=2, buffer=True)
+    unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages
