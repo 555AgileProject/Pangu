@@ -5,7 +5,7 @@ import unittest
 class UserStoryTest(unittest.TestCase):
     test = p.Repository('./Trump_Fam.ged')
     func_name = ''
-    for func_name in ['us01', 'us02', 'us03', 'us04', 'us05', 'us06', 'us07', 'us08', 'us09', 'us10']:
+    for func_name in ['us01', 'us02', 'us03', 'us04', 'us05', 'us06', 'us07', 'us08', 'us09', 'us10', 'us14', 'us15','us12','us16','us17','us18','us19','us20']:
         getattr(test, func_name)()
 
     def test_us02(self):
@@ -54,7 +54,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us09())
 
     def test_us15(self):
-        expect = ['@F3@']
+        expect = ['@F7@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us12(self):
@@ -77,8 +77,17 @@ class UserStoryTest(unittest.TestCase):
     def test_us18(self):
         expect = ['@I33@', '@I34@']
         self.test.us18()
-        self.assertEqual(expect, self.test.us18()) #nice
+        self.assertEqual(expect, self.test.us18())
+    
+    def test_us19(self):
+        expect = ['@I31@', '@I32@']
+        self.test.us19()
+        self.assertEqual(expect, self.test.us19())
 
+    def test_us20(self):
+        expect = ['@I33@', '@I34@']
+        self.test.us20()
+        self.assertEqual(expect, self.test.us20())
 
 
 
