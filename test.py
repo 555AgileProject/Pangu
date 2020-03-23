@@ -48,6 +48,14 @@ class UserStoryTest(unittest.TestCase):
         expect = {'@F4@'}
         self.test.us05()
         self.assertEqual(self.test.us05(), expect)
+        
+    def test_us14(self):
+        expect = ['@F7@']
+        self.assertEqual(expect, self.test.us09())
+
+    def test_us15(self):
+        expect = ['@F3@']
+        self.assertEqual(expect, self.test.us09())
 
     def test_us12(self):
         result= self.test.us12()
