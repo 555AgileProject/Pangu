@@ -43,7 +43,6 @@ class UserStoryTest(unittest.TestCase):
 
     def test_us05(self):
         expect = {'@F4@'}
-        self.test.us05()
         self.assertEqual(self.test.us05(), expect)
 
     def test_us14(self):
@@ -83,6 +82,14 @@ class UserStoryTest(unittest.TestCase):
     def test_us20(self):
         expect = ['@I33@', '@I34@']
         self.assertEqual(expect, self.test.us20())
+
+    def test_us11(self):
+        expect = {'@I1@'}
+        self.assertEqual(expect, self.test.us11())
+    
+    def test_us13(self):
+        expect = {'@F2@', '@F5@'}
+        self.assertEqual(expect, self.test.us13())
 
 
 if __name__ == '__main__':

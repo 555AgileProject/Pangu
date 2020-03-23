@@ -37,7 +37,7 @@ class Repository:
         self.indi = {}
         self.fam = {}
         self._analyze_files()
-        # self.pretty_print()
+        self.pretty_print()
 
     def update_age(self):
         for indi in self.indi.values():
@@ -579,3 +579,50 @@ class Repository:
                         print(f"ERROR: FAMILY: US18: {fam2_id} married with his(her) siblings")
                         fam_error.append(fam2_id)
         return fam_error
+
+    def us11(self):
+        """
+            This is th user story 11. no bigamy in each family.
+        """
+        error_id = set()
+        for fam_id, fam in self.fam.items():
+            for fam_id_2, fam_2 in self.fam.items():
+                if fam_id == fam_id_2:
+                    pass
+                else:
+                    if fam.hus_id == fam_2.hus_id:
+                        if self.ad_date_compare(fam.mar_date, fam_2.div_date)*self.ad_date_compare(fam.mar_date, fam_2.mar_date) == -1 or self.ad_date_compare(fam_2.mar_date, fam.div_date)*self.ad_date_compare(fam_2.mar_date, fam.mar_date) == -1:
+                            print(f"ERROR: FAMILY: US11: {fam.hus_id} has a bigamy cheat! of two family at same time! ")
+                            if (not error_id.issuperset({fam.hus_id})):
+                                error_id.add(fam.hus_id)
+                    if fam.wife_id == fam_2.wife_id:
+                        if self.ad_date_compare(fam.mar_date, fam_2.div_date)*self.ad_date_compare(fam.mar_date, fam_2.mar_date) == -1 or self.ad_date_compare(fam_2.mar_date, fam.div_date)*self.ad_date_compare(fam_2.mar_date, fam.mar_date) == -1:
+                            print(f"ERROR: FAMILY: US11: {fam.wife_id} has a bigamy cheat! of two family at same time! ")
+                            if (not error_id.issuperset({fam.wife_id})):
+                                error_id.add(fam.wife_id)
+        return error_id
+                                
+    
+    def us13(self):
+        """
+            This is th user story 14. sibilings have more than 8 month birthday or less two day birthday.
+        """
+        error_id = set()
+        for fam_id, fam in self.fam.items():
+            if len(fam.child_id) >= 2:
+                for child_id in fam.child_id:
+                    for child_id_2 in fam.child_id:
+                        if child_id != child_id_2:
+                            date_1 = self.indi[child_id].bday
+                            date_2 = self.indi[child_id_2].bday
+                            if self.ad_date_compare(date_1, date_2) == 1:
+                                temp = date_1
+                                date_1 = date_2
+                                date_2 = temp
+                            if self.ad_date_compare(date_1, date_2)!=0 and (date_1 - date_2) > timedelta(10) and (date_1 - date_2) < timedelta(240):
+                                print(f"ERROR: FAMILY: US13: {fam_id} has abnormal sbiling space less than 8 month but larger than 2days! ")
+                                if (not error_id.issuperset({fam_id})):
+                                    error_id.add(fam_id)
+            else:
+                pass
+        return error_id
