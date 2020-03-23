@@ -399,7 +399,6 @@ class Repository:
         """No more than five siblings should be born at the same time"""
         fam_result = []
         for fam_id, fam in self.fam.items():
-            # fam_result.extend(fam_result)
             child_bdy = defaultdict(int)
             for child in fam.child_id:
                 if self.indi[child].bday != "NA":
