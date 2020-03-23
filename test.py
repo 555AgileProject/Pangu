@@ -11,7 +11,7 @@ class UserStoryTest(unittest.TestCase):
         getattr(test, func_name)()
 
     def test_us01(self):
-        expect = {'@I6@', '@I13@', '@F4@'}
+        expect = {'@F4@', '@I30@', '@I34@', '@I6@', '@I13@', '@I32@', '@I31@'}
         self.assertEqual(self.test.us01(), expect)
 
     def test_us02(self):
@@ -40,24 +40,28 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us07())
 
     def test_us08(self):
-        expect = ['@F4@', '@F4@', '@F4@' ]
+        expect = ['@F4@', '@F4@']
         self.assertEqual(expect, self.test.us08())
 
     def test_us09(self):
-        expect = ['@F7@']
+        expect = ['@F8@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us10(self):
-        expect = ['@F1@', '@F7@']
+        expect = ['@F1@', '@F8@']
         self.assertEqual(expect, self.test.us10())
 
     def test_us14(self):
-        expect = ['@F7@']
+        expect = ['@F8@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us15(self):
-        expect = ['@F7@']
+        expect = ['@F8@']
         self.assertEqual(expect, self.test.us09())
+
+    def test_us19(self):
+        expect = ['@I31@', '@I32@']
+        self.assertEqual(expect, self.test.us19())
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2, buffer=True)
