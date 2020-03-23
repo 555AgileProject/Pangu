@@ -420,7 +420,7 @@ class Repository:
             return (fam_result)
 
     def us19(self):
-        '''Divorce can only occur before death of both spouses'''
+        '''First cousins should not marry one another'''
         result = []
         for fam_id, fam in self.fam.items():
             hus = fam.hus_id
