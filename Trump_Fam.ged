@@ -1,14 +1,14 @@
 0 HEAD
 1 SOUR Family Echo
 2 WWW http://www.familyecho.com/
-1 FILE My Family
+1 FILE Family 2
 1 DATE 22 MAR 2020
 1 DEST ANSTFILE
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
 1 SUBM @I1@
-2 NAME Speed
+2 NAME Donald Trump
 1 SUBN
 1 CHAR UTF-8
 0 @I1@ INDI
@@ -47,8 +47,6 @@
 2 SURN Maples
 2 _MARNM Maples
 1 SEX F
-1 BIRT
-2 DATE 10 SEP 1950
 1 FAMS @F3@
 0 @I5@ INDI
 1 NAME Barron /Trump/
@@ -64,21 +62,20 @@
 1 SEX M
 1 BIRT
 2 DATE 1 JUL 2021
-1 FAMS @F5@
 1 FAMC @F2@
 0 @I7@ INDI
 1 NAME Ivanka
 2 GIVN Ivanka
 1 SEX F
+1 FAMS @F5@
 1 FAMS @F6@
-1 FAMS @F7@
 1 FAMC @F2@
 0 @I8@ INDI
 1 NAME Jared Kushner /Kushner/
 2 GIVN Jared Kushner
 2 SURN Kushner
 1 SEX M
-1 FAMS @F6@
+1 FAMS @F5@
 0 @I9@ INDI
 1 NAME Eric Trump /Trump/
 2 GIVN Eric Trump
@@ -94,8 +91,6 @@
 2 GIVN Tiffany Trump
 2 SURN Trump
 1 SEX F
-1 BIRT
-2 DATE 9 OCT 2019
 1 FAMC @F3@
 0 @I11@ INDI
 1 NAME Fred Trump /Trump/
@@ -124,7 +119,7 @@
 1 SEX M
 1 DEAT Y
 2 DATE 2 FEB 2022
-1 FAMS @F7@
+1 FAMS @F6@
 0 @I14@ INDI
 1 NAME Alex Trump /Trump/
 2 GIVN Alex Trump
@@ -135,7 +130,7 @@
 2 DATE 4 MAY 1950
 1 DEAT Y
 2 DATE 6 JUL 1967
-1 FAMS @F8@
+1 FAMS @F7@
 1 FAMC @F4@
 0 @I15@ INDI
 1 NAME Susan /Trump/
@@ -145,7 +140,7 @@
 1 SEX F
 1 BIRT
 2 DATE 2 SEP 1955
-1 FAMS @F8@
+1 FAMS @F7@
 0 @I16@ INDI
 1 NAME Tom /Trump/
 2 GIVN Tom
@@ -154,102 +149,84 @@
 1 SEX M
 1 BIRT
 2 DATE 7 NOV 1969
-1 FAMC @F8@
+1 FAMC @F7@
 0 @I17@ INDI
-1 NAME Riddle /Trumpe/
-2 GIVN Riddle
-2 SURN Trumpe
-2 _MARNM Trumpe
+1 NAME Imagin Trump 1
+2 GIVN Imagin Trump 1
 1 SEX M
 1 BIRT
-2 DATE 6 JUN 2000
-1 FAMC @F4@
+2 DATE 5 JAN 1990
+1 FAMC @F2@
 0 @I18@ INDI
-1 NAME Imagin Trump 2 /2/
+1 NAME Imagin Trump 2
 2 GIVN Imagin Trump 2
-2 SURN 2
 1 SEX F
+1 BIRT
+2 DATE 5 JAN 1990
+1 FAMC @F2@
 0 @I19@ INDI
-1 NAME Imagin Trump4 /Trump4/
+1 NAME Imagin Trump4
 2 GIVN Imagin Trump4
-2 SURN Trump4
 1 SEX F
+1 BIRT
+2 DATE 5 JAN 1990
+1 FAMC @F2@
 0 @I20@ INDI
-1 NAME Angel 6 /6/
+1 NAME Angel 6
 2 GIVN Angel 6
-2 SURN 6
 1 SEX F
+1 FAMC @F2@
 0 @I21@ INDI
-1 NAME Imain Trump 66 /66/
+1 NAME Imain Trump 66
 2 GIVN Imain Trump 66
-2 SURN 66
 1 SEX M
+1 BIRT
+2 DATE 5 JAN 1990
+1 FAMC @F2@
 0 @I22@ INDI
-1 NAME Imagin 9 /9/
+1 NAME Imagin 9
 2 GIVN Imagin 9
-2 SURN 9
+1 BIRT
+2 DATE 5 JAN 1990
+1 FAMC @F2@
 0 @I23@ INDI
-1 NAME Imagin 10 /10/
+1 NAME Imagin 10
 2 GIVN Imagin 10
-2 SURN 10
 1 SEX F
+1 BIRT
+2 DATE 5 JAN 1990
+1 FAMC @F2@
 0 @I24@ INDI
-1 NAME Imagin 12 /12/
+1 NAME Imagin 12
 2 GIVN Imagin 12
-2 SURN 12
 1 SEX M
+1 FAMC @F2@
 0 @I25@ INDI
-1 NAME Imagin 99 /99/
+1 NAME Imagin 99
 2 GIVN Imagin 99
-2 SURN 99
 1 SEX F
+1 FAMC @F2@
 0 @I26@ INDI
-1 NAME Imagin 14 /14/
+1 NAME Imagin 14
 2 GIVN Imagin 14
-2 SURN 14
 1 SEX F
+1 FAMC @F2@
 0 @I27@ INDI
-1 NAME Imagin 14 /14/
+1 NAME Imagin 14
 2 GIVN Imagin 14
-2 SURN 14
 1 SEX F
+1 FAMC @F2@
 0 @I28@ INDI
-1 NAME Imagin the Last? /Last?/
+1 NAME Imagin the Last?
 2 GIVN Imagin the Last?
-2 SURN Last?
 1 SEX F
+1 FAMC @F2@
 0 @I29@ INDI
 1 NAME Imagin the Safety /Extra/
 2 GIVN Imagin the Safety
 2 SURN Extra
 1 SEX M
-0 @I30@ INDI
-1 NAME Vanessa /Scott/
-2 GIVN Vanessa
-2 SURN Scott
-2 _MARNM Trump
-1 SEX F
-1 BIRT
-2 DATE 11 APR 2021
-1 FAMS @F5@
-0 @I31@ INDI
-1 NAME Camaron /Trump/
-2 GIVN Camaron
-2 SURN Trump
-2 _MARNM Trump
-1 SEX M
-1 BIRT
-2 DATE 7 MAY 2030
-1 FAMS @F9@
-1 FAMC @F5@
-0 @I32@ INDI
-1 NAME Sara /Trump/
-2 GIVN Sara
-2 SURN Trump
-2 _MARNM Trump
-1 SEX F
-1 FAMS @F9@
-1 FAMC @F6@
+1 FAMC @F2@
 0 @F1@ FAM
 1 HUSB @I1@
 1 WIFE @I2@
@@ -263,6 +240,19 @@
 1 CHIL @I6@
 1 CHIL @I7@
 1 CHIL @I9@
+1 CHIL @I17@
+1 CHIL @I18@
+1 CHIL @I19@
+1 CHIL @I20@
+1 CHIL @I21@
+1 CHIL @I22@
+1 CHIL @I23@
+1 CHIL @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+1 CHIL @I27@
+1 CHIL @I28@
+1 CHIL @I29@
 1 _CURRENT N
 0 @F3@ FAM
 1 HUSB @I1@
@@ -274,39 +264,24 @@
 1 WIFE @I12@
 1 CHIL @I1@
 1 CHIL @I14@
-1 CHIL @I17@
 1 MARR
 2 DATE 2 MAY 2021
 1 DIV
 2 DATE 4 JAN 2021
 1 _CURRENT Y
 0 @F5@ FAM
-1 HUSB @I6@
-1 WIFE @I30@
-1 CHIL @I31@
-1 MARR
-2 DATE 7 APR 2025
-1 _CURRENT Y
-0 @F6@ FAM
 1 HUSB @I8@
 1 WIFE @I7@
-1 CHIL @I32@
-1 MARR
 1 _CURRENT Y
-0 @F7@ FAM
+0 @F6@ FAM
 1 HUSB @I13@
 1 WIFE @I7@
 1 _CURRENT N
-0 @F8@ FAM
+0 @F7@ FAM
 1 HUSB @I14@
 1 WIFE @I15@
 1 CHIL @I16@
 1 MARR
 2 DATE 5 AUG 1965
-1 _CURRENT Y
-0 @F9@ FAM
-1 HUSB @I31@
-1 WIFE @I32@
-1 MARR
 1 _CURRENT Y
 0 TRLR
