@@ -408,7 +408,6 @@ class Repository:
         print(f"ERROR: FAMILY: US14: {fam_result} has more than 5 children born on same date")
         return(fam_result)
 
-
     def us15(self):
         """There should be fewer than 15 siblings in a family"""
         fam_result = []
@@ -428,7 +427,6 @@ class Repository:
         if(fam_result):
             print(f"ERROR: FAMILY: US14: {fam_result} has more than 15 children born")
             return(fam_result)
-
 
     def us19(self):
         '''Divorce can only occur before death of both spouses'''
