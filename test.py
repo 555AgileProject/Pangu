@@ -18,15 +18,15 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us06())
 
     def test_us07(self):
-        expect = ['@I11@', '@I12@']
+        expect = ['@I12@', '@I13@']
         self.assertEqual(expect, self.test.us07())
 
     def test_us09(self):
-        expect = ['@F8@']
+        expect = ['@F9@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us10(self):
-        expect = ['@F1@', '@F8@']
+        expect = ['@F1@', '@F9@']
         self.assertEqual(expect, self.test.us10())
 
     def test_us04(self):
@@ -38,7 +38,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us08())
 
     def test_us01(self):
-        expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I30@', '@I13@', '@I34@'}
+        expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I7@', '@I14@', '@I34@'}
         self.assertEqual(self.test.us01(), expect)
 
     def test_us05(self):
@@ -46,11 +46,11 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(self.test.us05(), expect)
 
     def test_us14(self):
-        expect = ['@F8@']
+        expect = ['@F9@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us15(self):
-        expect = ['@F8@']
+        expect = ['@F9@']
         self.assertEqual(expect, self.test.us09())
 
     def test_us12(self):
@@ -74,11 +74,11 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us18())
 
     def test_us19(self):
-        expect = ['@I31@', '@I32@']
+        expect = ['@I31@', '@I32@', '@I38@', '@I37@']
         self.assertEqual(expect, self.test.us19())
 
     def test_us20(self):
-        expect = ['@I33@', '@I34@']
+        expect = ['@I33@', '@I34@', '@I36@', '@I11@']
         self.assertEqual(expect, self.test.us20())
 
     def test_us11(self):
