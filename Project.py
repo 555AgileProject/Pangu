@@ -362,11 +362,7 @@ class Repository:
                     print(f"f{f.id} Husband age does not exist. ")
                     continue
             if f.child_id:
-                childs = []
-                for cid in f.child_id:
-                    childs.append(self.indi[cid])
-
-                for child in childs:
+                for child in [self.indi[c] for c in f.child_id]:
                     if child.age == "NA":
                         print(f"Child {child.id} age does not exist.")
                         continue
