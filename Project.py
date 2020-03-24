@@ -479,7 +479,8 @@ class Repository:
                                     wife_dad_dad = fam.hus_id
                                     break
 
-            if (hus_mom_mom == wife_mom_mom and hus_mom_dad == wife_mom_dad) or (
+            if (hus_mom != wife_mom and hus_dad != wife_dad) and (
+                    hus_mom_mom == wife_mom_mom and hus_mom_dad == wife_mom_dad) or (
                     hus_mom_mom == wife_dad_mom and hus_mom_dad == wife_dad_dad) or (
                     hus_dad_mom == wife_mom_mom and hus_dad_dad == wife_mom_dad) or (
                     hus_dad_mom == wife_dad_mom and hus_dad_dad == wife_dad_dad):
