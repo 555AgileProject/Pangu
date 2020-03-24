@@ -422,6 +422,7 @@ class Repository:
     def us19(self):
         '''First cousins should not marry one another'''
         result = []
+        count = 0
         for fam_id, fam in self.fam.items():
             hus = fam.hus_id
             wife = fam.wife_id
@@ -484,13 +485,15 @@ class Repository:
                     hus_dad_mom == wife_dad_mom and hus_dad_dad == wife_dad_dad):
                 result.append(hus)
                 result.append(wife)
-                print(f"ERROR: FAMILY: US19: {result[0]} and {result[1]} are first cousins")
-                return result
+                print(f"ERROR: FAMILY: US19: {result[count]} and {result[count+1]} are first cousins")
+                count = count + 2
+        return result
 
 
     def us20(self):
         '''Aunts and uncles should not marry their nieces or nephews'''
         result = []
+        count = 0
         for fam_id, fam in self.fam.items():
             hus = fam.hus_id
             wife = fam.wife_id
@@ -553,8 +556,9 @@ class Repository:
                     wife_mom == hus_dad_mom and wife_dad == hus_dad_dad):
                         result.append(hus)
                         result.append(wife)
-                        print(f"ERROR: FAMILY: US20: {result[0]} and {result[1]} are uncle-niece/wife-nephew")
-                        return result
+                        print(f"ERROR: FAMILY: US20: {result[count]} and {result[count+1]} are uncle-niece/wife-nephew")
+                        count = count + 2
+        return result
 
 
     def us17(self):
