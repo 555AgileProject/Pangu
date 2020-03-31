@@ -1,4 +1,4 @@
-# Team Pangu
+# Team Pangu Sprint 3
 
 ### Arun: Scrum Master, Developer
 ### Boyang Guo: Developer and tester
