@@ -42,14 +42,14 @@ class Repository:
     def update_age(self):
         for indi in self.indi.values():
             if indi.bday != 'NA' and indi.dday != 'NA':
-                indi.age = indi.dday.year - indi.bday.year - (
-                        (indi.dday.month, indi.dday.day) < (indi.bday.month, indi.bday.day))
+                indi.age = int(indi.dday.year - indi.bday.year - (
+                        (indi.dday.month, indi.dday.day) < (indi.bday.month, indi.bday.day)))
 
                 indi.alive = False
             elif indi.bday != 'NA':
                 today = date.today()
-                indi.age = today.year - indi.bday.year - (
-                        (today.month, today.day) < (indi.bday.month, indi.bday.day))
+                indi.age = int(today.year - indi.bday.year - (
+                        (today.month, today.day) < (indi.bday.month, indi.bday.day)))
                 indi.alive = True
             else:
                 indi.age = 'NA'
@@ -366,10 +366,10 @@ class Repository:
                     if child.age == "NA":
                         print(f"Child {child.id} age does not exist.")
                         continue
-                    if (int(wife.age) - int(child.age)) > 60:
+                    if (wife.age - child.age) > 60:
                         print(f"ERROR: FAMILY: US12: {f.id} Mother's age: {wife.age}, child's age: {child.age}")
                         res.add(f.id)
-                    if (int(hus.age) - int(child.age)) > 80:
+                    if (hus.age - child.age) > 80:
                         print(f"ERROR: FAMILY: US12: {f.id} Father's age: {hus.age}, child's age: {child.age}")
                         res.add(f.id)
         return res
@@ -482,10 +482,9 @@ class Repository:
                     hus_dad_mom == wife_dad_mom and hus_dad_dad == wife_dad_dad):
                 result.append(hus)
                 result.append(wife)
-                print(f"ERROR: FAMILY: US19: {result[count]} and {result[count+1]} are first cousins")
+                print(f"ERROR: FAMILY: US19: {result[count]} and {result[count + 1]} are first cousins")
                 count = count + 2
         return result
-
 
     def us20(self):
         '''Aunts and uncles should not marry their nieces or nephews'''
@@ -547,16 +546,15 @@ class Repository:
                                     wife_dad_dad = fam.hus_id
                                     break
 
-            if(hus_mom == wife_mom_mom and hus_dad == wife_mom_dad) or (
-                    hus_mom == wife_dad_mom and hus_dad == wife_dad_dad) or(
+            if (hus_mom == wife_mom_mom and hus_dad == wife_mom_dad) or (
+                    hus_mom == wife_dad_mom and hus_dad == wife_dad_dad) or (
                     wife_mom == hus_mom_mom and wife_dad == hus_mom_dad) or (
                     wife_mom == hus_dad_mom and wife_dad == hus_dad_dad):
-                        result.append(hus)
-                        result.append(wife)
-                        print(f"ERROR: FAMILY: US20: {result[count]} and {result[count+1]} are uncle-niece/wife-nephew")
-                        count = count + 2
+                result.append(hus)
+                result.append(wife)
+                print(f"ERROR: FAMILY: US20: {result[count]} and {result[count + 1]} are uncle-niece/wife-nephew")
+                count = count + 2
         return result
-
 
     def us17(self):
         """No marriages to children"""
@@ -592,18 +590,24 @@ class Repository:
                     pass
                 else:
                     if fam.hus_id == fam_2.hus_id:
-                        if self.ad_date_compare(fam.mar_date, fam_2.div_date)*self.ad_date_compare(fam.mar_date, fam_2.mar_date) == -1 or self.ad_date_compare(fam_2.mar_date, fam.div_date)*self.ad_date_compare(fam_2.mar_date, fam.mar_date) == -1:
+                        if self.ad_date_compare(fam.mar_date, fam_2.div_date) * self.ad_date_compare(fam.mar_date,
+                                                                                                     fam_2.mar_date) == -1 or self.ad_date_compare(
+                            fam_2.mar_date, fam.div_date) * self.ad_date_compare(fam_2.mar_date,
+                                                                                 fam.mar_date) == -1:
                             print(f"ERROR: FAMILY: US11: {fam.hus_id} has a bigamy cheat! of two family at same time! ")
                             if (not error_id.issuperset({fam.hus_id})):
                                 error_id.add(fam.hus_id)
                     if fam.wife_id == fam_2.wife_id:
-                        if self.ad_date_compare(fam.mar_date, fam_2.div_date)*self.ad_date_compare(fam.mar_date, fam_2.mar_date) == -1 or self.ad_date_compare(fam_2.mar_date, fam.div_date)*self.ad_date_compare(fam_2.mar_date, fam.mar_date) == -1:
-                            print(f"ERROR: FAMILY: US11: {fam.wife_id} has a bigamy cheat! of two family at same time! ")
+                        if self.ad_date_compare(fam.mar_date, fam_2.div_date) * self.ad_date_compare(fam.mar_date,
+                                                                                                     fam_2.mar_date) == -1 or self.ad_date_compare(
+                            fam_2.mar_date, fam.div_date) * self.ad_date_compare(fam_2.mar_date,
+                                                                                 fam.mar_date) == -1:
+                            print(
+                                f"ERROR: FAMILY: US11: {fam.wife_id} has a bigamy cheat! of two family at same time! ")
                             if (not error_id.issuperset({fam.wife_id})):
                                 error_id.add(fam.wife_id)
         return error_id
-                                
-    
+
     def us13(self):
         """
             This is th user story 14. sibilings have more than 8 month birthday or less two day birthday.
@@ -620,10 +624,30 @@ class Repository:
                                 temp = date_1
                                 date_1 = date_2
                                 date_2 = temp
-                            if self.ad_date_compare(date_1, date_2)!=0 and (date_1 - date_2) > timedelta(10) and (date_1 - date_2) < timedelta(240):
-                                print(f"ERROR: FAMILY: US13: {fam_id} has abnormal sbiling space less than 8 month but larger than 2days! ")
+                            if self.ad_date_compare(date_1, date_2) != 0 and (date_1 - date_2) > timedelta(10) and (
+                                    date_1 - date_2) < timedelta(240):
+                                print(
+                                    f"ERROR: FAMILY: US13: {fam_id} has abnormal sbiling space less than 8 month but larger than 2days! ")
                                 if (not error_id.issuperset({fam_id})):
                                     error_id.add(fam_id)
             else:
                 pass
         return error_id
+
+    def us30(self):
+        '''List all living married people in a GEDCOM file'''
+        l = []
+        for i in self.indi.values():
+            if i.alive and i.spouse != 'NA':
+                l.append(i.id)
+        print(f"US30: all living married people in a GEDCOM file:<{l}> ")
+        return l
+
+    def us31(self):
+        '''List all living people over 30 who have never been married in a GEDCOM file'''
+        l = []
+        for i in self.indi.values():
+            if i.alive and i.spouse == "NA" and i.age!='NA' and i.age > 30:
+                l.append(i.id)
+        print(f"US31: over 30 who have never been married in a GEDCOM file:<{l}>")
+        return l
