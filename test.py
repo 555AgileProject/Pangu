@@ -3,7 +3,7 @@ import unittest
 
 
 class UserStoryTest(unittest.TestCase):
-    test = p.Repository('./Trump_Fam.ged')
+    test = p.Repository('C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\\Trump_Fam.ged')
 
     def test_us01(self):
         expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I7@', '@I14@', '@I34@'}
@@ -14,7 +14,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us02())
 
     def test_us03(self):
-        expect = ["@F1@"]
+        expect = ["@I10@"]
         self.assertEqual(expect, self.test.us03())
 
     def test_us04(self):
