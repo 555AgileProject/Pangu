@@ -1,10 +1,14 @@
 import Project as p
 import unittest
+import sys
 
 
 class UserStoryTest(unittest.TestCase):
-    test = p.Repository('C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\\Trump_Fam.ged')
-
+    if(sys.platform == "win32"):
+        test = p.Repository('C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\\Trump_Fam.ged')
+    else:
+        test = p.Repository('./Trump_Fam.ged')
+        
     def test_us01(self):
         expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I7@', '@I14@', '@I34@'}
         self.assertEqual(self.test.us01(), expect)
