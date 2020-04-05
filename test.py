@@ -4,11 +4,11 @@ import sys
 
 
 class UserStoryTest(unittest.TestCase):
-    if(sys.platform == "win32"):
+    if (sys.platform == "win32"):
         test = p.Repository('C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\\Trump_Fam.ged')
     else:
         test = p.Repository('./Trump_Fam.ged')
-        
+
     def test_us01(self):
         expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I7@', '@I14@', '@I34@'}
         self.assertEqual(self.test.us01(), expect)
@@ -92,6 +92,14 @@ class UserStoryTest(unittest.TestCase):
     def test_us20(self):
         expect = ['@I33@', '@I34@', '@I36@', '@I11@']
         self.assertEqual(expect, self.test.us20())
+
+    def test_us30(self):
+        expect = ['@I33@', '@I34@', '@I36@', '@I11@']
+        self.assertEqual(expect, self.test.us30())
+
+    def test_us31(self):
+        expect = ['@I33@', '@I34@', '@I36@', '@I11@']
+        self.assertEqual(expect, self.test.us31())
 
 
 if __name__ == '__main__':
