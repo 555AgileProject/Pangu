@@ -651,3 +651,38 @@ class Repository:
                 l.append(i.id)
         print(f"US31: over 30 who have never been married in a GEDCOM file:<{l}>")
         return l
+
+    def us22(self):
+        '''All individual IDs should be unique and all family IDs should be unique'''
+        Error_IDs = []
+        Error_Fam_IDs = []
+        Exist_IDs = []
+        Exist_Fam_IDs = []
+        for i in self.indi.values():
+            if i.id not in Exist_IDs:
+                Exist_IDs.append(i.id)
+            else:
+                print(f"ERROR: individual: US22: indi_id({i.id}) is not unique!")
+                Error_IDs.append(i.id)
+
+
+        for k in self.fam.values():
+            if k.id not in Exist_Fam_IDs:
+                Exist_Fam_IDs.append(k.id)
+            else:
+                print(f"ERROR: FAMILY: US22: fam_id({k.id}) is not unique!")
+                Error_Fam_IDs.append(k.id)
+        return Error_IDs, Error_Fam_IDs
+
+
+    def us23(self):
+        '''No more than one individual with the same name and birth date should appear in a GEDCOM file'''
+        Error_Indi = []
+        for i1 in self.indi.values():
+            for i2 in self.indi.values():
+                if i1.id != i2.id and i1.bday != "NA" and i2.bday != "NA":
+                    if i1.name == i2.name and i1.bday == i2.bday:
+                        print(f"ERROR: INDIVIDUAL: US23: INDIVIDUAL({i1.id}, {i2.id}) have not unique name and birth date!")
+                        Error_Indi.append(i1.id)
+                        Error_Indi.append(i2.id)
+        return Error_Indi
