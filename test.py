@@ -1,13 +1,10 @@
 import Project as p
 import unittest
 import sys
-
+import os.path
 
 class UserStoryTest(unittest.TestCase):
-    if (sys.platform == "win32"):
-        test = p.Repository('C:\\Users\\arunn\\Desktop\\Masters!\\SSW-555_Agile\\TeamProject\\Trump_Fam.ged')
-    else:
-        test = p.Repository('./Trump_Fam.ged')
+    test = p.Repository(os.path.join('.','Trump_Fam.ged'))
 
     def test_us01(self):
         expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I7@', '@I14@', '@I34@'}
@@ -94,11 +91,12 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us20())
 
     def test_us30(self):
-        expect = ['@I33@', '@I34@', '@I36@', '@I11@']
+        expect = ['@I1@', '@I2@', '@I3@', '@I4@', '@I6@', '@I7@', '@I8@', '@I9@', '@I12@', '@I14@', '@I16@', '@I31@',
+                  '@I32@', '@I33@', '@I34@', '@I35@', '@I36@', '@I37@', '@I38@', '@I39@', '@I43@', '@I44@']
         self.assertEqual(expect, self.test.us30())
 
     def test_us31(self):
-        expect = ['@I33@', '@I34@', '@I36@', '@I11@']
+        expect = ['@I17@', '@I41@', '@I42@']
         self.assertEqual(expect, self.test.us31())
 
     def test_us22(self):
@@ -108,6 +106,7 @@ class UserStoryTest(unittest.TestCase):
     def test_us23(self):
         expect = ['@I41@', '@I42@', '@I42@', '@I41@']
         self.assertEqual(expect, self.test.us23())
+
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages
