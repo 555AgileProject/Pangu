@@ -688,7 +688,7 @@ class Repository:
         return Error_Indi
 
     def us21(self):
-
+        '''Husband in family should be male and wife in family should be female'''
         result = []
         for fam_id, fam in self.fam.items():
             hus = fam.hus_id
@@ -734,3 +734,13 @@ class Repository:
                                 error_id.add(fam_id)
                                 print(f"ERROR: FAMILY: US25: family {fam_id} has a child who has same name and birth date with his/her sibilings")
         return error_id
+
+
+    def us27(self):
+        '''Include person's current age when listing individuals'''
+        result = []
+        for i in self.indi.values():
+            if i.alive and i.age != 'NA':
+                result.append((i.id, i.age))
+        print(f"US27: All living peoples with their current age in GEDCOM file:<{result}> ")
+        return result

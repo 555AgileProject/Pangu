@@ -119,6 +119,10 @@ class UserStoryTest(unittest.TestCase):
         expect = ['@I5@']
         self.assertEqual(expect, self.test.us21())
 
+    def test_us27(self):
+        expect = [('@I1@', 73), ('@I2@', 39), ('@I3@', 71), ('@I5@', 11), ('@I6@', -2), ('@I7@', -1), ('@I12@', 71), ('@I16@', 64), ('@I17@', 50), ('@I18@', 30), ('@I19@', 30), ('@I20@', 30), ('@I22@', 30), ('@I23@', 30), ('@I24@', 30), ('@I25@', 30), ('@I26@', 30), ('@I27@', 29), ('@I28@', 30), ('@I31@', -7), ('@I32@', -7), ('@I33@', 18), ('@I34@', -6), ('@I41@', 70), ('@I42@', 70), ('@I45@', 11), ('@I46@', 10)]
+        self.assertEqual(expect, self.test.us27())
+
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages
