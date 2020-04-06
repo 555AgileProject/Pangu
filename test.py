@@ -115,6 +115,10 @@ class UserStoryTest(unittest.TestCase):
         expect = ['@I41@', '@I42@', '@I42@', '@I41@']
         self.assertEqual(expect, self.test.us23())
 
+    def test_us21(self):
+        expect = ['@I5@']
+        self.assertEqual(expect, self.test.us21())
+
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages

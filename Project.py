@@ -693,17 +693,16 @@ class Repository:
         for fam_id, fam in self.fam.items():
             hus = fam.hus_id
             wife = fam.wife_id
-            for id in self.indi.items():
-                if id.gender != 'NA':
-                    if hus == id and id.gender == 'F':
-                        result.append(hus)
-                        print(f"ERROR: FAMILY: US21: {hus} has wrong gender")
+            if self.indi[hus].gender == 'F' and self.indi[hus].gender != 'NA':
+                result.append(hus)
+                print(f"ERROR: individual: US21: Husband {hus} has wrong gender")
 
-                    if wife == id and id.gender == 'M':
-                        result.append(hus.id)
-                        print(f"ERROR: FAMILY: US21: {wife} has wrogn gender")
+            if self.indi[wife].gender == 'M' and self.indi[wife].gender != 'NA':
+                result.append(wife)
+                print(f"ERROR: individual: US21: wife {wife} has wrong gender")
         return result
-   
+
+
     def us24(self):
         """
         No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file
