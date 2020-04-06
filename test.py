@@ -1,10 +1,10 @@
 import Project as p
 import unittest
-import sys
 import os.path
 
+
 class UserStoryTest(unittest.TestCase):
-    test = p.Repository(os.path.join('.','Trump_Fam.ged'))
+    test = p.Repository(os.path.join('.', 'Trump_Fam.ged'))
 
     def test_us01(self):
         expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I7@', '@I14@', '@I34@'}
@@ -89,18 +89,19 @@ class UserStoryTest(unittest.TestCase):
     def test_us20(self):
         expect = ['@I33@', '@I34@', '@I36@', '@I11@']
         self.assertEqual(expect, self.test.us20())
-  
+
     def test_us24(self):
-        expect = {'@F6@','@F7@'}
+        expect = {'@F6@', '@F7@'}
         self.assertEqual(expect, self.test.us24())
-        
+
     def test_us25(self):
-        expect = {'@F3@','@F4@'}
+        expect = {'@F3@', '@F4@'}
         self.assertEqual(expect, self.test.us25())
 
     def test_us30(self):
-        expect = ['@I1@', '@I2@', '@I3@', '@I4@', '@I6@', '@I7@', '@I8@', '@I9@', '@I12@', '@I14@', '@I16@', '@I31@',
-                  '@I32@', '@I33@', '@I34@', '@I35@', '@I36@', '@I37@', '@I38@', '@I39@', '@I43@', '@I44@']
+        expect = ['@I1@', '@I2@', '@I3@', '@I4@', '@I5@', '@I6@', '@I7@', '@I8@', '@I9@', '@I12@', '@I14@', '@I16@',
+                  '@I31@', '@I32@', '@I33@', '@I34@', '@I35@', '@I36@', '@I37@', '@I38@', '@I39@', '@I43@', '@I44@',
+                  '@I46@']
         self.assertEqual(expect, self.test.us30())
 
     def test_us31(self):
@@ -120,7 +121,11 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us21())
 
     def test_us27(self):
-        expect = [('@I1@', 73), ('@I2@', 39), ('@I3@', 71), ('@I5@', 11), ('@I6@', -2), ('@I7@', -1), ('@I12@', 71), ('@I16@', 64), ('@I17@', 50), ('@I18@', 30), ('@I19@', 30), ('@I20@', 30), ('@I22@', 30), ('@I23@', 30), ('@I24@', 30), ('@I25@', 30), ('@I26@', 30), ('@I27@', 29), ('@I28@', 30), ('@I31@', -7), ('@I32@', -7), ('@I33@', 18), ('@I34@', -6), ('@I41@', 70), ('@I42@', 70), ('@I45@', 11), ('@I46@', 10)]
+        expect = [('@I1@', 73), ('@I2@', 39), ('@I3@', 71), ('@I5@', 11), ('@I6@', -2), ('@I7@', -1), ('@I12@', 71),
+                  ('@I16@', 64), ('@I17@', 50), ('@I18@', 30), ('@I19@', 30), ('@I20@', 30), ('@I22@', 30),
+                  ('@I23@', 30), ('@I24@', 30), ('@I25@', 30), ('@I26@', 30), ('@I27@', 29), ('@I28@', 30),
+                  ('@I31@', -7), ('@I32@', -7), ('@I33@', 18), ('@I34@', -6), ('@I41@', 70), ('@I42@', 70),
+                  ('@I45@', 11), ('@I46@', 10)]
         self.assertEqual(expect, self.test.us27())
 
 
