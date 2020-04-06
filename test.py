@@ -56,7 +56,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertIn('@F2@', result)
 
     def test_us13(self):
-        expect = {'@F2@', '@F5@'}
+        expect = {'@F2@', '@F1@','@F4@','@F6@'}
         self.assertEqual(expect, self.test.us13())
 
     def test_us14(self):
@@ -91,11 +91,11 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us20())
 
     def test_us24(self):
-        expect = {'@F6@', '@F7@'}
+        expect = {'@F8@', '@F7@'}
         self.assertEqual(expect, self.test.us24())
 
     def test_us25(self):
-        expect = {'@F3@', '@F4@'}
+        expect = {'@F2@', '@F4@'}
         self.assertEqual(expect, self.test.us25())
 
     def test_us30(self):
