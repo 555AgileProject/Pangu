@@ -740,7 +740,7 @@ class Repository:
         '''Include person's current age when listing individuals'''
         result = []
         for i in self.indi.values():
-            if i.alive and i.age != 'NA':
+            if i.alive and i.age != 'NA' and i.age >= 0:
                 result.append((i.id, i.age))
         print(f"US27: All living peoples with their current age in GEDCOM file:<{result}> ")
         return result
