@@ -695,11 +695,11 @@ class Repository:
             wife = fam.wife_id
             if self.indi[hus].gender == 'F':
                 result.append(hus)
-                print(f"ERROR: individual: US21: Husband {hus} has wrong gender")
+                print(f"ERROR: INDIVIDUAL: US21: Husband {hus} has wrong gender")
 
             if self.indi[wife].gender == 'M':
                 result.append(wife)
-                print(f"ERROR: individual: US21: wife {wife} has wrong gender")
+                print(f"ERROR: INDIVIDUAL: US21: wife {wife} has wrong gender")
         return result
 
 
