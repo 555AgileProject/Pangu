@@ -703,7 +703,35 @@ class Repository:
                         result.append(hus.id)
                         print(f"ERROR: FAMILY: US21: {wife} has wrogn gender")
         return result
-
-
-
-
+   
+    def us24(self):
+        """
+        No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file
+        """
+        error_id = set()
+        for fam_id, fam in self.fam.items():
+            for fam_id_2, fam_2 in self.fam.items():
+                if fam_id == fam_id_2:
+                    pass
+                else:
+                    if fam.mar_date == fam_2.mar_date and fam.mar_date != 'NA' and (fam.hus_id == fam_2.hus_id or fam.wife_id == fam_2.wife_id):
+                        error_id.add(fam_id)
+                        print(f"ERROR: FAMILY: US24: family {fam_id} has the same spouse with other family")
+        return error_id
+    
+    def us25(self):
+        """
+        No more than one child with the same name and birth date should appear in a family
+        """
+        error_id = set()
+        for fam_id, fam in self.fam.items():
+            if len(fam.child_id) >= 2:
+                for child_1 in fam.child_id:
+                    for child_2 in fam.child_id:
+                        if child_1 == child_2:
+                            pass
+                        else:
+                            if self.indi[child_1].name == self.indi[child_2].name and self.indi[child_1].bday != 'NA' and self.indi[child_1].bday == self.indi[child_2].bday:
+                                error_id.add(fam_id)
+                                print(f"ERROR: FAMILY: US25: family {fam_id} has a child who has same name and birth date with his/her sibilings")
+        return error_id

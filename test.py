@@ -89,6 +89,14 @@ class UserStoryTest(unittest.TestCase):
     def test_us20(self):
         expect = ['@I33@', '@I34@', '@I36@', '@I11@']
         self.assertEqual(expect, self.test.us20())
+  
+    def test_us24(self):
+        expect = {'@F6@','@F7@'}
+        self.assertEqual(expect, self.test.us24())
+        
+    def test_us25(self):
+        expect = {'@F3@','@F4@'}
+        self.assertEqual(expect, self.test.us25())
 
     def test_us30(self):
         expect = ['@I1@', '@I2@', '@I3@', '@I4@', '@I6@', '@I7@', '@I8@', '@I9@', '@I12@', '@I14@', '@I16@', '@I31@',
