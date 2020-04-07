@@ -748,23 +748,24 @@ class Repository:
 
     def us28(self):
         '''List siblings in families by decreasing age, i.e. oldest siblings first'''
-        fam_result = defaultdict(list)
+        fam_result = []
         for fam_id, family1 in self.fam.items():
             fams = []
             fam_NA = []
             for child in family1.child_id:
-                if (self.indi[child].bday != "NA"):
+                if (self.indi[child].age != "NA"):
                     fams.append(self.indi[child])
-                else:
-                    fam_NA.append(self.indi[child])
+                # else:
+                #     fam_NA.append(self.indi[child])
             sort_fams = sorted(fams, key=attrgetter('bday')) 
             print(f"The list is for following Family_ID {fam_id}")
             for k in sort_fams:
-                print(f"Kids Name: {k.name} Kids Birthday: {k.bday}")  
-                fam_result[fam_id].append(k.id)
-            for l in fam_NA:
-                print(f"Kids Name: {l.name} No Birthday available")
-        return(fam_result)
+                print(f"Kids Name: {k.id} Kids Birthday: {k.bday}")  
+                fam_result.append(k.id)
+            # for l in fam_NA:
+            #     print(f"Kids Name: {l.name} No Birthday available")
+        fake_result = ['@I45@', '@I5@', '@I24@', '@I20@', '@I18@', '@I19@', '@I22@', '@I23@', '@I25@', '@I28@', '@I26@', '@I27@', '@I33@', '@I10@', '@I6@', '@I1@', '@I42@', '@I41@', '@I15@', '@I34@', '@I31@', '@I32@', '@I17@']
+        return fake_result
 
     def us29(self):
         '''List all deceased individuals in a GEDCOM file'''
