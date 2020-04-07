@@ -764,7 +764,6 @@ class Repository:
                 fam_result[fam_id].append(k.id)
             for l in fam_NA:
                 print(f"Kids Name: {l.name} No Birthday available")
-        print(fam_result)                
         return(fam_result)
 
     def us29(self):
