@@ -3,6 +3,8 @@ from prettytable import PrettyTable
 from Project02 import file_reading_gen
 from dateutil.relativedelta import relativedelta
 from collections import defaultdict
+from operator import attrgetter
+
 
 import logging
 
@@ -735,7 +737,6 @@ class Repository:
                                 print(f"ERROR: FAMILY: US25: family {fam_id} has a child who has same name and birth date with his/her sibilings")
         return error_id
 
-
     def us27(self):
         '''Include person's current age when listing individuals'''
         result = []
@@ -744,3 +745,33 @@ class Repository:
                 result.append((i.id, i.age))
         print(f"US27: All living peoples with their current age in GEDCOM file:<{result}> ")
         return result
+
+    def us28(self):
+        '''List siblings in families by decreasing age, i.e. oldest siblings first'''
+        fam_result = defaultdict(list)
+        for fam_id, family1 in self.fam.items():
+            fams = []
+            fam_NA = []
+            for child in family1.child_id:
+                if (self.indi[child].bday != "NA"):
+                    fams.append(self.indi[child])
+                else:
+                    fam_NA.append(self.indi[child])
+            sort_fams = sorted(fams, key=attrgetter('bday')) 
+            print(f"The list is for following Family_ID {fam_id}")
+            for k in sort_fams:
+                print(f"Kids Name: {k.name} Kids Birthday: {k.bday}")  
+                fam_result[fam_id].append(k.id)
+            for l in fam_NA:
+                print(f"Kids Name: {l.name} No Birthday available")
+        print(fam_result)                
+        return(fam_result)
+
+    def us29(self):
+        '''List all deceased individuals in a GEDCOM file'''
+        ind_result = []
+        cur_date = datetime.now()
+        for ind_id, ind in self.indi.items():
+            if (self.ad_date_compare(self.indi[ind_id].dday, cur_date.date())):
+                ind_result.append(ind_id)
+        return(ind_result)

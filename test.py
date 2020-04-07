@@ -5,7 +5,7 @@ import os.path
 
 class UserStoryTest(unittest.TestCase):
     test = p.Repository(os.path.join('.', 'Trump_Fam.ged'))
-
+    
     def test_us01(self):
         expect = {'@I32@', '@F4@', '@I6@', '@I31@', '@I7@', '@I14@', '@I34@'}
         self.assertEqual(self.test.us01(), expect)
@@ -90,6 +90,18 @@ class UserStoryTest(unittest.TestCase):
         expect = ['@I33@', '@I34@']
         self.assertEqual(expect, self.test.us20())
 
+    def test_us21(self):
+        expect = ['@I5@']
+        self.assertEqual(expect, self.test.us21())
+
+    def test_us22(self):
+        expect = ([], [])
+        self.assertEqual(expect, self.test.us22())
+
+    def test_us23(self):
+        expect = ['@I26@', '@I28@', '@I28@', '@I26@', '@I41@', '@I42@', '@I42@', '@I41@']
+        self.assertEqual(expect, self.test.us23())
+
     def test_us24(self):
         expect = {'@F8@', '@F7@'}
         self.assertEqual(expect, self.test.us24())
@@ -98,6 +110,21 @@ class UserStoryTest(unittest.TestCase):
         expect = {'@F2@', '@F4@'}
         self.assertEqual(expect, self.test.us25())
 
+    def test_us27(self):
+        expect = [('@I1@', 73), ('@I2@', 39), ('@I3@', 71), ('@I5@', 11), ('@I12@', 71), ('@I16@', 64), ('@I17@', 50),
+                  ('@I18@', 30), ('@I19@', 30), ('@I20@', 30), ('@I22@', 30), ('@I23@', 30), ('@I24@', 30),
+                  ('@I25@', 30), ('@I26@', 30), ('@I27@', 29), ('@I28@', 30), ('@I33@', 18), ('@I41@', 70),
+                  ('@I42@', 70), ('@I45@', 11), ('@I46@', 10)]
+        self.assertEqual(expect, self.test.us27())
+
+    def test_us28(self):
+        expect = {'@F1@': ['@I45@', '@I5@'], '@F2@': ['@I23@', '@I20@', '@I19@', '@I24@', '@I22@', '@I18@', '@I25@', '@I26@', '@I28@', '@I27@', '@I33@', '@I10@', '@I6@'], '@F4@': ['@I1@', '@I42@', '@I41@', '@I15@'], '@F6@': ['@I34@', '@I31@'], '@F7@': ['@I32@'], '@F9@': ['@I17@']}
+        self.assertEqual(expect, self.test.us28())
+
+    def test_us29(self):
+        expect = ['@I10@', '@I13@', '@I14@', '@I15@']
+        self.assertEqual(expect, self.test.us29())
+    
     def test_us30(self):
         expect = ['@I1@', '@I2@', '@I3@', '@I4@', '@I5@', '@I6@', '@I7@', '@I8@', '@I9@', '@I12@', '@I14@', '@I16@',
                   '@I31@', '@I32@', '@I33@', '@I34@', '@I35@', '@I36@', '@I37@', '@I38@', '@I39@', '@I43@', '@I44@',
@@ -108,27 +135,8 @@ class UserStoryTest(unittest.TestCase):
         expect = ['@I17@', '@I41@', '@I42@']
         self.assertEqual(expect, self.test.us31())
 
-    def test_us22(self):
-        expect = ([], [])
-        self.assertEqual(expect, self.test.us22())
-
-    def test_us23(self):
-        expect = ['@I26@', '@I28@', '@I28@', '@I26@', '@I41@', '@I42@', '@I42@', '@I41@']
-        self.assertEqual(expect, self.test.us23())
-
-    def test_us21(self):
-        expect = ['@I5@']
-        self.assertEqual(expect, self.test.us21())
-
-    def test_us27(self):
-        expect = [('@I1@', 73), ('@I2@', 39), ('@I3@', 71), ('@I5@', 11), ('@I12@', 71), ('@I16@', 64), ('@I17@', 50),
-                  ('@I18@', 30), ('@I19@', 30), ('@I20@', 30), ('@I22@', 30), ('@I23@', 30), ('@I24@', 30),
-                  ('@I25@', 30), ('@I26@', 30), ('@I27@', 29), ('@I28@', 30), ('@I33@', 18), ('@I41@', 70),
-                  ('@I42@', 70), ('@I45@', 11), ('@I46@', 10)]
 
 
-        self.assertEqual(expect, self.test.us27())
-
-
+  
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages
