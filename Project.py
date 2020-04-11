@@ -158,33 +158,25 @@ class Repository:
                 [key, d.mar_date, d.div_date, d.hus_id, hus_name, d.wife_id, wife_name, d.child_id])
         print(ptf.get_string(title="Families"))
 
-    def us06(self):
-        '''Divorce can only occur before death of both spouses'''
-        l = []
-        for k, f in self.fam.items():
-            if f.div_date != 'NA':
-                d1 = self.indi[f.hus_id].dday
-                d2 = self.indi[f.wife_id].dday
-                if d1 != 'NA' and f.div_date > d1:
-                    print(f"ERROR: FAMILY: US06: {k}: Divorced {f.div_date} after husband's death on {d1}")
-                    l.append(k)
-                if d2 != 'NA' and f.div_date > d2:
-                    print(f"ERROR: FAMILY: US06: {k}: Divorced {f.div_date} after wife's death on {d2}")
-                    l.append(k)
-        return l
 
-    def us07(self):
-        '''Death should be less than 150 years after birth for dead people,
-        and current date should be less than 150 years after birth for all living people'''
-        l = []
-        for k, i in self.indi.items():
-            if i.age != 'NA' and i.age >= 150:
-                s = f'ERROR: INDIVIDUAL: US07: {k} More than 150 years old at death - Birth {i.bday}'
-                if i.dday != 'NA':
-                    s += f': Death {i.dday}'
-                print(s)
-                l.append(k)
-        return l
+    def us01(self):
+        """Dates (birth, marriage, divorce, death) should not be after the current date """
+        error_id = set()
+        curr_date = date.today()
+        check_items_indi = ['bday', 'dday']
+        check_items_fam = ['mar_date', 'div_date']
+        for usr_id, usr in self.indi.items():  # check the usr bday and dday
+            for check_item in check_items_indi:
+                if self.ad_date_compare(getattr(usr, check_item), curr_date) == -1:
+                    error_id.add(usr_id)
+                    print(
+                        f"ERROR: INDIVIDUAL: US01: {usr_id} {check_item} {getattr(usr, check_item)} occurs in the future")
+        for fam_id, fam in self.fam.items():
+            for check_item in check_items_fam:
+                if self.ad_date_compare(getattr(fam, check_item), curr_date) == -1:
+                    error_id.add(fam_id)
+                    print(f"ERROR: FAMILY: US01: {fam_id} {check_item} {getattr(fam, check_item)} occurs in the future")
+        return error_id
 
     def us02(self):
         """Birth should occur before marriage of an individual"""
@@ -227,6 +219,89 @@ class Repository:
                     l.append(x)
         return l
 
+    def us04(self):
+        """Marriage before divorce
+        date of marrige should be before date of divorce"""
+        l = []
+        for k, f in self.fam.items():
+            if f.mar_date != "NA" and f.div_date != "NA":
+                d1 = f.mar_date
+                d2 = f.div_date
+                if d1 != "NA" and d2 != "NA" and d1 > d2:
+                    print(f"ERROR: FAMILY: US04: {k} Marriage {d1} before divorse {d2}")
+                    l.append(k)
+        return l
+
+    def us05(self):
+        """ Marriage should occur before death of either spouse """
+        error_id = set()
+        for fam_id, fam in self.fam.items():
+            fam_mar_d = fam.mar_date
+            hus_dday = self.indi[fam.hus_id].dday
+            if self.ad_date_compare(fam_mar_d, hus_dday) == -1:
+                print(
+                    f"ERROR: FAMILY: US05: {fam_id} Husband death {self.indi[fam.hus_id].dday} before the marrige {fam.mar_date}")
+                if (not error_id.issuperset({fam_id})):
+                    error_id.add(fam_id)
+            if self.ad_date_compare(fam.mar_date, self.indi[fam.wife_id].dday) == -1:
+                print(
+                    f"ERROR: FAMILY: US05: {fam_id} Wife death {self.indi[fam.wife_id].dday} before the marrige {fam.mar_date}")
+                if (not error_id.issuperset({fam_id})):
+                    error_id.add(fam_id)
+        return error_id
+
+    def us06(self):
+        '''Divorce can only occur before death of both spouses'''
+        l = []
+        for k, f in self.fam.items():
+            if f.div_date != 'NA':
+                d1 = self.indi[f.hus_id].dday
+                d2 = self.indi[f.wife_id].dday
+                if d1 != 'NA' and f.div_date > d1:
+                    print(f"ERROR: FAMILY: US06: {k}: Divorced {f.div_date} after husband's death on {d1}")
+                    l.append(k)
+                if d2 != 'NA' and f.div_date > d2:
+                    print(f"ERROR: FAMILY: US06: {k}: Divorced {f.div_date} after wife's death on {d2}")
+                    l.append(k)
+        return l
+
+    def us07(self):
+        '''Death should be less than 150 years after birth for dead people,
+        and current date should be less than 150 years after birth for all living people'''
+        l = []
+        for k, i in self.indi.items():
+            if i.age != 'NA' and i.age >= 150:
+                s = f'ERROR: INDIVIDUAL: US07: {k} More than 150 years old at death - Birth {i.bday}'
+                if i.dday != 'NA':
+                    s += f': Death {i.dday}'
+                print(s)
+                l.append(k)
+        return l
+
+    def us08(self):
+        """Birth before marriage of parent
+        Children should be born after marriage of parents (and not more than 9 months after their divorce)"""
+        l = []
+        for k, f in self.fam.items():
+            for i in f.child_id:
+                if f.mar_date != "NA" and f.div_date != "NA":
+                    d1 = self.indi[i].bday
+                    d2 = f.mar_date
+                    d3 = f.div_date
+                    d4 = d3 + relativedelta(months=9)
+                    if d1 != "NA" and d2 != 'NA' and d3 != 'NA' and (d1 < d2 or d1 > d4):
+                        print(
+                            f"ERROR: FAMILY: US08: {k} Birth {d1} before marriage of parents on {d2} or birth {d1} more than 9 months after divorce")
+                        l.append(k)
+                elif f.mar_date != "NA":
+                    d1 = self.indi[i].bday
+                    d2 = f.mar_date
+                    if d1 != "NA" and d2 != "NA" and d1 < d2:
+                        print(f"ERROR: FAMILY: US08: {k} Birth {d1} before marriange {d2}")
+                        l.append(k)
+        return l
+
+
     def us09(self):
         """Birth before death of parents
         Child should be born before death of mother and before 9 months after death of father"""
@@ -260,79 +335,10 @@ class Repository:
                         l.append(k)
         return l
 
-    def us04(self):
-        """Marriage before divorce
-        date of marrige should be before date of divorce"""
-        l = []
-        for k, f in self.fam.items():
-            if f.mar_date != "NA" and f.div_date != "NA":
-                d1 = f.mar_date
-                d2 = f.div_date
-                if d1 != "NA" and d2 != "NA" and d1 > d2:
-                    print(f"ERROR: FAMILY: US04: {k} Marriage {d1} before divorse {d2}")
-                    l.append(k)
-        return l
 
-    def us08(self):
-        """Birth before marriage of parent
-        Children should be born after marriage of parents (and not more than 9 months after their divorce)"""
-        l = []
-        for k, f in self.fam.items():
-            for i in f.child_id:
-                if f.mar_date != "NA" and f.div_date != "NA":
-                    d1 = self.indi[i].bday
-                    d2 = f.mar_date
-                    d3 = f.div_date
-                    d4 = d3 + relativedelta(months=9)
-                    if d1 != "NA" and d2 != 'NA' and d3 != 'NA' and (d1 < d2 or d1 > d4):
-                        print(
-                            f"ERROR: FAMILY: US08: {k} Birth {d1} before marriage of parents on {d2} or birth {d1} more than 9 months after divorce")
-                        l.append(k)
-                elif f.mar_date != "NA":
-                    d1 = self.indi[i].bday
-                    d2 = f.mar_date
-                    if d1 != "NA" and d2 != "NA" and d1 < d2:
-                        print(f"ERROR: FAMILY: US08: {k} Birth {d1} before marriange {d2}")
-                        l.append(k)
 
-        return l
 
-    def us01(self):
-        """Dates (birth, marriage, divorce, death) should not be after the current date """
-        error_id = set()
-        curr_date = date.today()
-        check_items_indi = ['bday', 'dday']
-        check_items_fam = ['mar_date', 'div_date']
-        for usr_id, usr in self.indi.items():  # check the usr bday and dday
-            for check_item in check_items_indi:
-                if self.ad_date_compare(getattr(usr, check_item), curr_date) == -1:
-                    error_id.add(usr_id)
-                    print(
-                        f"ERROR: INDIVIDUAL: US01: {usr_id} {check_item} {getattr(usr, check_item)} occurs in the future")
-        for fam_id, fam in self.fam.items():
-            for check_item in check_items_fam:
-                if self.ad_date_compare(getattr(fam, check_item), curr_date) == -1:
-                    error_id.add(fam_id)
-                    print(f"ERROR: FAMILY: US01: {fam_id} {check_item} {getattr(fam, check_item)} occurs in the future")
-        return error_id
 
-    def us05(self):
-        """ Marriage should occur before death of either spouse """
-        error_id = set()
-        for fam_id, fam in self.fam.items():
-            fam_mar_d = fam.mar_date
-            hus_dday = self.indi[fam.hus_id].dday
-            if self.ad_date_compare(fam_mar_d, hus_dday) == -1:
-                print(
-                    f"ERROR: FAMILY: US05: {fam_id} Husband death {self.indi[fam.hus_id].dday} before the marrige {fam.mar_date}")
-                if (not error_id.issuperset({fam_id})):
-                    error_id.add(fam_id)
-            if self.ad_date_compare(fam.mar_date, self.indi[fam.wife_id].dday) == -1:
-                print(
-                    f"ERROR: FAMILY: US05: {fam_id} Wife death {self.indi[fam.wife_id].dday} before the marrige {fam.mar_date}")
-                if (not error_id.issuperset({fam_id})):
-                    error_id.add(fam_id)
-        return error_id
 
     def ad_date_compare(self, my_date, compare_date):
         """
