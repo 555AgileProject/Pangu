@@ -135,6 +135,14 @@ class UserStoryTest(unittest.TestCase):
         expect = ['@I17@', '@I41@', '@I42@']
         self.assertEqual(expect, self.test.us31())
 
+    def test_us36(self):
+        expect = ['@I7@']
+        self.assertEqual(expect, self.test.us36())
+
+    def test_us37(self):
+        expect = ['@I17@', '@I41@', '@I42@']
+        self.assertEqual(expect, self.test.us37())
+
 
 
   

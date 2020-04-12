@@ -301,7 +301,6 @@ class Repository:
                         l.append(k)
         return l
 
-
     def us09(self):
         """Birth before death of parents
         Child should be born before death of mother and before 9 months after death of father"""
@@ -334,11 +333,6 @@ class Repository:
                         print(f"ERROR: FAMILY: US10: {k} Marriage {d3} before 14")
                         l.append(k)
         return l
-
-
-
-
-
 
     def ad_date_compare(self, my_date, compare_date):
         """
@@ -784,3 +778,29 @@ class Repository:
             if (self.ad_date_compare(self.indi[ind_id].dday, cur_date.date())):
                 ind_result.append(ind_id)
         return(ind_result)
+
+    def us36(self):
+        '''List all people in a GEDCOM file who died in the last 30 days'''
+        ind_result = []
+        cur_date = datetime.now()
+        for ind_id, ind in self.indi.items():
+            if self.indi[ind_id].dday != "NA":
+                if (cur_date.date() - timedelta(days=30) < self.indi[ind_id].dday < cur_date.date()):
+                    ind_result.append(ind_id)
+        print(f"US36: List of individuals who have died in last 30 days {ind_result} ")
+        return(ind_result)
+
+    def us37(self):
+        '''List all living spouses and descendants of people in a GEDCOM file who died in the last 30 days'''
+        ind_result = []
+        cur_date = datetime.now()
+        for ind_id, ind in self.indi.items():
+            if self.indi[ind_id].dday != "NA":
+                if (cur_date.date() - timedelta(days=30) < self.indi[ind_id].dday < cur_date.date()):
+                    ind_result.append(ind_id)
+        for inds in ind_result:
+            spouse = self.indi[inds].spouse
+            kids = self.indi[inds].child
+        print(self.indi[self.fam[spouse].wife_id].name)
+        print(self.fam[kids].child_id)
+        return (spouse,kids)
