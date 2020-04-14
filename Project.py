@@ -801,3 +801,13 @@ class Repository:
         print(f"US37: List of ID's of Spouses of people who have died in last 30 days {spouse} ")
         print(f"US37: List of ID's of Children of people who have died in last 30 days {kids} ")
         return (spouse,kids)
+
+    def us32(self):
+        '''List all multiple births in a GEDCOM file'''
+        result = []
+        for id, fam in self.fam.items():
+            if len(fam.child_id) > 1:
+                print(f"US32: Multiple births: FAMILY:<{id}>, Children --> <{fam.child_id}>")
+                result.append(id)
+
+        return result

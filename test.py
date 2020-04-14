@@ -144,6 +144,9 @@ class UserStoryTest(unittest.TestCase):
         expect_kids = {'@I35@', '@I32@'}
         self.assertEqual((expect_spouse, expect_kids), self.test.us37())
 
+    def test_us32(self):
+        expect = ['@F1@', '@F2@', '@F4@', '@F6@', '@F12@']
+        self.assertEqual(expect, self.test.us32())
   
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages
