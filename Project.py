@@ -757,8 +757,6 @@ class Repository:
             for child in f_child_id:
                 if (self.indi[child].age != "NA"):
                     fams.append(self.indi[child])
-                # else:
-                #     fam_NA.append(self.indi[child])
             sort_fams = sorted(fams, key=attrgetter('bday','id')) 
             print(f"The list is for following Family_ID {fam_id}")
             for k in sort_fams:
@@ -766,8 +764,7 @@ class Repository:
                 sort_fams_id.append(k.id)
             if len(sort_fams_id) != 0:
                 fam_result[fam_id] = sort_fams_id
-            else:
-                pass    
+
         return fam_result
 
     def us29(self):
@@ -787,7 +784,7 @@ class Repository:
             if self.indi[ind_id].dday != "NA":
                 if (cur_date.date() - timedelta(days=30) < self.indi[ind_id].dday < cur_date.date()):
                     ind_result.append(ind_id)
-        print(f"US36: List of individuals who have died in last 30 days {ind_result} ")
+        print(f"US36: List of individual ID's who have died in last 30 days {ind_result} ")
         return(ind_result)
 
     def us37(self):
@@ -799,8 +796,8 @@ class Repository:
                 if (cur_date.date() - timedelta(days=30) < self.indi[ind_id].dday < cur_date.date()):
                     ind_result.append(ind_id)
         for inds in ind_result:
-            spouse = self.indi[inds].spouse
-            kids = self.indi[inds].child
-        print(self.indi[self.fam[spouse].wife_id].name)
-        print(self.fam[kids].child_id)
+            spouse = self.fam[self.indi[inds].spouse].wife_id
+            kids = self.fam[self.indi[inds].spouse].child_id
+        print(f"US37: List of ID's of Spouses of people who have died in last 30 days {spouse} ")
+        print(f"US37: List of ID's of Children of people who have died in last 30 days {kids} ")
         return (spouse,kids)
