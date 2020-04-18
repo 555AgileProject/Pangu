@@ -5,7 +5,6 @@ from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 from operator import attrgetter
 
-
 import logging
 
 
@@ -157,7 +156,6 @@ class Repository:
             ptf.add_row(
                 [key, d.mar_date, d.div_date, d.hus_id, hus_name, d.wife_id, wife_name, d.child_id])
         print(ptf.get_string(title="Families"))
-
 
     def us01(self):
         """Dates (birth, marriage, divorce, death) should not be after the current date """
@@ -649,7 +647,7 @@ class Repository:
         '''List all living people over 30 who have never been married in a GEDCOM file'''
         l = []
         for i in self.indi.values():
-            if i.alive and i.spouse == "NA" and i.age!='NA' and i.age > 30:
+            if i.alive and i.spouse == "NA" and i.age != 'NA' and i.age > 30:
                 l.append(i.id)
         print(f"US31: over 30 who have never been married in a GEDCOM file:<{l}>")
         return l
@@ -667,7 +665,6 @@ class Repository:
                 print(f"ERROR: individual: US22: indi_id({i.id}) is not unique!")
                 Error_IDs.append(i.id)
 
-
         for k in self.fam.values():
             if k.id not in Exist_Fam_IDs:
                 Exist_Fam_IDs.append(k.id)
@@ -676,7 +673,6 @@ class Repository:
                 Error_Fam_IDs.append(k.id)
         return Error_IDs, Error_Fam_IDs
 
-
     def us23(self):
         '''No more than one individual with the same name and birth date should appear in a GEDCOM file'''
         Error_Indi = []
@@ -684,7 +680,8 @@ class Repository:
             for i2 in self.indi.values():
                 if i1.id != i2.id and i1.bday != "NA" and i2.bday != "NA":
                     if i1.name == i2.name and i1.bday == i2.bday:
-                        print(f"ERROR: INDIVIDUAL: US23: INDIVIDUAL({i1.id}, {i2.id}) have not unique name and birth date!")
+                        print(
+                            f"ERROR: INDIVIDUAL: US23: INDIVIDUAL({i1.id}, {i2.id}) have not unique name and birth date!")
                         Error_Indi.append(i1.id)
                         Error_Indi.append(i2.id)
         return Error_Indi
@@ -704,7 +701,6 @@ class Repository:
                 print(f"ERROR: INDIVIDUAL: US21: wife {wife} has wrong gender")
         return result
 
-
     def us24(self):
         """
         No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file
@@ -715,11 +711,12 @@ class Repository:
                 if fam_id == fam_id_2:
                     pass
                 else:
-                    if fam.mar_date == fam_2.mar_date and fam.mar_date != 'NA' and (fam.hus_id == fam_2.hus_id or fam.wife_id == fam_2.wife_id):
+                    if fam.mar_date == fam_2.mar_date and fam.mar_date != 'NA' and (
+                            fam.hus_id == fam_2.hus_id or fam.wife_id == fam_2.wife_id):
                         error_id.add(fam_id)
                         print(f"ERROR: FAMILY: US24: family {fam_id} has the same spouse with other family")
         return error_id
-    
+
     def us25(self):
         """
         No more than one child with the same name and birth date should appear in a family
@@ -732,9 +729,11 @@ class Repository:
                         if child_1 == child_2:
                             pass
                         else:
-                            if self.indi[child_1].name == self.indi[child_2].name and self.indi[child_1].bday != 'NA' and self.indi[child_1].bday == self.indi[child_2].bday:
+                            if self.indi[child_1].name == self.indi[child_2].name and self.indi[
+                                child_1].bday != 'NA' and self.indi[child_1].bday == self.indi[child_2].bday:
                                 error_id.add(fam_id)
-                                print(f"ERROR: FAMILY: US25: family {fam_id} has a child who has same name and birth date with his/her sibilings")
+                                print(
+                                    f"ERROR: FAMILY: US25: family {fam_id} has a child who has same name and birth date with his/her sibilings")
         return error_id
 
     def us27(self):
@@ -757,7 +756,7 @@ class Repository:
             for child in f_child_id:
                 if (self.indi[child].age != "NA"):
                     fams.append(self.indi[child])
-            sort_fams = sorted(fams, key=attrgetter('bday','id')) 
+            sort_fams = sorted(fams, key=attrgetter('bday', 'id'))
             print(f"The list is for following Family_ID {fam_id}")
             for k in sort_fams:
                 print(f"Kids Name: {k.id} Kids Birthday: {k.bday}")
@@ -774,7 +773,7 @@ class Repository:
         for ind_id, ind in self.indi.items():
             if (self.ad_date_compare(self.indi[ind_id].dday, cur_date.date())):
                 ind_result.append(ind_id)
-        return(ind_result)
+        return (ind_result)
 
     def us36(self):
         '''List all people in a GEDCOM file who died in the last 30 days'''
@@ -785,7 +784,7 @@ class Repository:
                 if (cur_date.date() - timedelta(days=30) < self.indi[ind_id].dday < cur_date.date()):
                     ind_result.append(ind_id)
         print(f"US36: List of individual ID's who have died in last 30 days {ind_result} ")
-        return(ind_result)
+        return (ind_result)
 
     def us37(self):
         '''List all living spouses and descendants of people in a GEDCOM file who died in the last 30 days'''
@@ -800,14 +799,26 @@ class Repository:
             kids = self.fam[self.indi[inds].spouse].child_id
         print(f"US37: List of ID's of Spouses of people who have died in last 30 days {spouse} ")
         print(f"US37: List of ID's of Children of people who have died in last 30 days {kids} ")
-        return (spouse,kids)
+        return (spouse, kids)
 
     def us32(self):
         '''List all multiple births in a GEDCOM file'''
         result = []
         for id, fam in self.fam.items():
             if len(fam.child_id) > 1:
-                print(f"US32: Multiple births: FAMILY:<{id}>, Children --> <{fam.child_id}>")
                 result.append(id)
-
+        print(f"US32: Multiple births: FAMILY:{result}")
         return result
+
+    def us39(self):
+        '''List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days'''
+        res = []
+        for fam in self.fam.values():
+            if self.indi[fam.hus_id].alive and self.indi[fam.wife_id].alive and fam.mar_date != 'NA':
+                anniversary = fam.mar_date.replace(year=datetime.today().year)
+                if anniversary < date.today() + timedelta(days=30):
+                    res.append((fam.hus_id, fam.wife_id))
+
+        print(
+            f"US39: All living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days: {res}")
+        return res
