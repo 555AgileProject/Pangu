@@ -822,3 +822,29 @@ class Repository:
         print(
             f"US39: All living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days: {res}")
         return res
+
+    def us33(self):
+        '''List all orphaned children (both parents dead and child < 18 years old) in a GEDCOM file'''
+        indi_result = []
+        for fam in self.fam.values():
+            if fam.child_id != "NA":
+                for id in fam.child_id:
+                    if self.indi[fam.hus_id].dday != 'NA' and self.indi[fam.wife_id].dday !="NA":
+                        if self.indi[fam.hus_id].alive == "NA" and self.indi[fam.wife_id].alive == "NA":
+                            if self.indi[id].age < 18:
+                                indi_result.append(id)
+        print(f"US33: All orphaned children (both parents dead and child < 18 years old): {indi_result}")
+        return indi_result
+
+    def us34(self):
+        '''List all couples who were married when the older spouse was more than twice as old as the younger spouse'''
+        indi_result = []
+        for fam in self.fam.values():
+            if self.indi[fam.hus_id].bday != 'NA' and self.indi[fam.wife_id].bday != 'NA':
+                if self.indi[fam.hus_id].age / 2 > self.indi[fam.wife_id].age \
+                        or self.indi[fam.wife_id].age / 2 > self.indi[fam.hus_id].age:
+                    indi_result.append((fam.hus_id, fam.wife_id))
+
+        print(
+            f"US34: All couples who were married when the older spouse was more than twice as old as the younger spouse: {indi_result}")
+        return indi_result
