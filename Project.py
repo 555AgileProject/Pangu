@@ -20,6 +20,8 @@ class Individual:
         self.dday = 'NA'
         self.child = 'NA'
         self.spouse = 'NA'
+        self.partial_date = [False, False]
+        self.illegitimate_date = [False, False]
 
 
 class Family:
@@ -30,6 +32,9 @@ class Family:
         self.hus_id = hus
         self.wife_id = wife
         self.child_id = child
+        self.partial_date = [False, False]
+        self.illegitimate_date = [False, False]
+
 
 
 class Repository:
@@ -119,8 +124,41 @@ class Repository:
                 if (readline[1] == 'DATE'):
                     try:
                         the_date = datetime.strptime(readline[2], '%d %b %Y').date()
-                    except Exception as E:
-                        print("ERROR: Please check the date format! ")  # what if this raises exception? #Solved!
+                    except ValueError :
+                        try:
+                            if indi_date_buff[0]:
+                                indi_buff.partial_date[0] = True
+                            elif indi_date_buff[1]:
+                                indi_buff.partial_date[1] = True
+                            if fam_date_buff[0]:
+                                fam_buff.partial_date[0] = True
+                            elif fam_date_buff[1]:
+                                fam_buff.partial_date[1] = True
+                            the_date = datetime.strptime(readline[2], '%Y').date()
+                        except Exception as E:
+                            try:
+                                the_date = datetime.strptime(readline[2], '%b %Y').date()
+                            except Exception as E:
+                                if indi_date_buff[0]:
+                                    indi_buff.partial_date[0] = False
+                                elif indi_date_buff[1]:
+                                    indi_buff.partial_date[1] = False
+                                if fam_date_buff[0]:
+                                    fam_buff.partial_date[0] = False
+                                elif fam_date_buff[1]:
+                                    fam_buff.partial_date[1] = False                         
+                                
+                                if indi_date_buff[0]:
+                                    indi_buff.illegitimate_date[0] = True
+                                elif indi_date_buff[1]:
+                                    indi_buff.illegitimate_date[1] = True
+                                if fam_date_buff[0]:
+                                    fam_buff.illegitimate_date[0] = True
+                                elif fam_date_buff[1]:
+                                    fam_buff.illegitimate_date[1] = True
+                                the_date = 'NA'
+                                print("!!!ERROR: Please check the date format! ")  # what if this raises exception? #Solved!
+                        
                     if indi_date_buff[0]:
                         indi_buff.bday = the_date
                         indi_date_buff[0] = False
@@ -848,3 +886,33 @@ class Repository:
         print(
             f"US34: All couples who were married when the older spouse was more than twice as old as the younger spouse: {indi_result}")
         return indi_result
+    
+    def us41(self):
+        """
+        Accept and use dates without days or without days and months
+        """
+        error_id = set()
+        for indi_id, indi in self.indi.items():
+            if indi.partial_date[0] or indi.partial_date[1]:
+                error_id.add(indi_id)
+                print(f"ABNORMAL: INDIVIDUAL: US41: {indi_id} has a partial birthday or death date! ")
+        for fam_id, fam in self.fam.items():
+            if fam.partial_date[0] or fam.partial_date[1]:
+                error_id.add(fam_id)
+                print(f"ABNORMAL: FAMILY: US41: {fam_id} has a partial marriage or divorce date! ")
+        return error_id
+    
+    def us42(self):
+        """
+        All dates should be legitimate dates for the months specified (e.g., 2/30/2015 is not legitimate)
+        """
+        error_id = set()
+        for indi_id, indi in self.indi.items():
+            if indi.illegitimate_date[0] or indi.illegitimate_date[1]:
+                error_id.add(indi_id)
+                print(f"ABNORMAL: INDIVIDUAL: US42: {indi_id} has a illegitimate birthday or death date! ")
+        for fam_id, fam in self.fam.items():
+            if fam.illegitimate_date[0] or fam.illegitimate_date[1]:
+                error_id.add(fam_id)
+                print(f"ABNORMAL: INDIVIDUAL: US42: {fam_id} has a illegitimate marriage or divorce date! ")
+        return error_id

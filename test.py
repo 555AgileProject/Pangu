@@ -122,7 +122,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us28())
 
     def test_us29(self):
-        expect = ['@I7@', '@I11@', '@I14@', '@I15@', '@I16@']
+        expect = ['@I7@', '@I11@', '@I14@', '@I15@', '@I16@', '@I47@']
         self.assertEqual(expect, self.test.us29())
     
     def test_us30(self):
@@ -149,7 +149,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us32())
 
     def test_us39(self):
-        expect = [('@I1@', '@I3@'), ('@I10@', '@I9@'), ('@I15@', '@I9@')]
+        expect = [('@I1@', '@I3@'), ('@I10@', '@I9@'), ('@I15@', '@I9@'), ('@I44@', '@I45@')]
         self.assertEqual(expect, self.test.us39())
 
     def test_us33(self):
@@ -159,6 +159,14 @@ class UserStoryTest(unittest.TestCase):
     def test_us34(self):
         expect = [('@I13@', '@I14@'), ('@I7@', '@I8@'), ('@I16@', '@I17@'), ('@I32@', '@I33@'), ('@I34@', '@I35@')]
         self.assertEqual(expect, self.test.us34())
+    
+    def test_us41(self):
+        expect = {'@I47@', '@F15@'}
+        self.assertEqual(expect, self.test.us41())
+        
+    def test_us42(self):
+        expect = {'@I45@'}
+        self.assertEqual(expect, self.test.us42())
   
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages
