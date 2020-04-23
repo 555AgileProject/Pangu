@@ -916,3 +916,27 @@ class Repository:
                 error_id.add(fam_id)
                 print(f"ABNORMAL: INDIVIDUAL: US42: {fam_id} has a illegitimate marriage or divorce date! ")
         return error_id
+
+
+    def us35(self):
+        '''List all people in a GEDCOM file who were born in the last 30 days'''
+        result = []
+        cur_date = datetime.now()
+        for ind_id, ind in self.indi.items():
+            if self.indi[ind_id].bday != "NA":
+                if (cur_date.date() - timedelta(days=30) < self.indi[ind_id].bday < cur_date.date()):
+                    result.append(ind_id)
+        print(f"US35: List of individual ID's who were born in last 30 days {result} ")
+        return (result)
+
+    def us38(self):
+        '''List all living people in a GEDCOM file whose birthdays occur in the next 30 days'''
+        result = []
+        cur_date = datetime.now()
+        today = date.today()
+        for ind_id, ind in self.indi.items():
+            if self.indi[ind_id].bday != "NA" and self.indi[ind_id].dday == "NA":
+                if (cur_date.date() + timedelta(days=30) > self.indi[ind_id].bday.replace(year=today.year) > cur_date.date()):
+                    result.append(ind_id)
+        print(f"US38: List of individual ID's who are alive and whose birthday is in next 30 days {result} ")
+        return (result)

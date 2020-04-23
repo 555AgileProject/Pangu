@@ -35,7 +35,7 @@ class UserStoryTest(unittest.TestCase):
         self.assertEqual(expect, self.test.us07())
 
     def test_us08(self):
-        expect = ['@F1@', '@F1@', '@F4@', '@F4@', '@F4@', '@F4@']
+        expect = ['@F1@', '@F1@', '@F1@', '@F4@', '@F4@', '@F4@', '@F4@']
         self.assertEqual(expect, self.test.us08())
 
     def test_us09(self):
@@ -114,11 +114,13 @@ class UserStoryTest(unittest.TestCase):
         expect = [('@I1@', 73), ('@I2@', 39), ('@I3@', 71), ('@I5@', 11), ('@I6@', 10), ('@I13@', 71), ('@I17@', 64),
                   ('@I18@', 50), ('@I19@', 30), ('@I20@', 30), ('@I21@', 30), ('@I23@', 30), ('@I24@', 30),
                   ('@I25@', 30), ('@I26@', 30), ('@I27@', 30), ('@I28@', 29), ('@I29@', 30), ('@I34@', 18),
-                  ('@I42@', 70), ('@I43@', 70), ('@I46@', 12)]
+                  ('@I42@', 70), ('@I43@', 70), ('@I46@', 12), ('@I48@', 0)]
         self.assertEqual(expect, self.test.us27())
 
     def test_us28(self):
-        expect = {'@F1@': ['@I46@', '@I5@'], '@F2@': ['@I19@', '@I20@', '@I21@', '@I23@', '@I24@', '@I25@', '@I26@', '@I27@', '@I29@', '@I28@', '@I34@', '@I11@', '@I7@'], '@F4@': ['@I1@', '@I42@', '@I43@', '@I16@'], '@F6@': ['@I35@', '@I32@'], '@F7@': ['@I33@'], '@F9@': ['@I18@']}
+        expect = {'@F1@': ['@I46@', '@I5@', '@I48@'],'@F2@': ['@I19@', '@I20@',  '@I21@', '@I23@', '@I24@', '@I25@',
+                   '@I26@', '@I27@', '@I29@', '@I28@', '@I34@', '@I11@', '@I7@'], '@F4@': ['@I1@', '@I42@', '@I43@',
+                   '@I16@'], '@F6@': ['@I35@', '@I32@'], '@F7@': ['@I33@'], '@F9@': ['@I18@']}
         self.assertEqual(expect, self.test.us28())
 
     def test_us29(self):
@@ -167,6 +169,15 @@ class UserStoryTest(unittest.TestCase):
     def test_us42(self):
         expect = {'@I45@'}
         self.assertEqual(expect, self.test.us42())
+
+    def test_us35(self):
+        expect = ['@I48@']
+        self.assertEqual(expect, self.test.us35())
+
+    def test_us38(self):
+        expect = ['@I2@']
+        self.assertEqual(expect, self.test.us38())
+
   
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)  # , buffer=True)  to hid print messages
